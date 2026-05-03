@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dolomites Wiki Chatbot</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f5f5f0;
+    color: #1a1a1a;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  header {
+    background: #1a3a2a;
+    color: #fff;
+    padding: 14px 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  header h1 { font-size: 1.1rem; font-weight: 600; }
+  header span { font-size: 1.4rem; }
+
+  .layout {
+    display: flex;
+    flex: 1;
+    overflow: hidden;
+  }
+
+  /* ── Chat column ── */
+  .chat-col {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    min-width: 0;
+  }
+
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .msg {
+    max-width: 720px;
+    line-height: 1.6;
+  }
+  .msg.user {
+    align-self: flex-end;
+    background: #1a3a2a;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 16px 16px 4px 16px;
+    font-size: 0.95rem;
+  }
+  .msg.assistant {
+    align-self: flex-start;
+    background: #fff;
+    border: 1px solid #e0e0d8;
+    padding: 14px 18px;
+    border-radius: 4px 16px 16px 16px;
+    font-size: 0.95rem;
+  }
+  .msg.assistant .sources {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #e8e8e0;
+  }
+  .badge {
+    background: #eef5ee;
+    color: #1a3a2a;
+    border: 1px solid #b8d8b8;
+    font-size: 0.75rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    font-family: monospace;
+  }
+  .msg.assistant .save-hint {
+    margin-top: 10px;
+    font-size: 0.82rem;
+    color: #666;
+  }
+  .msg.assistant .save-hint button {
+    background: none;
+    border: none;
+    color: #1a7a3a;
+    cursor: pointer;
+    font-size: 0.82rem;
+    padding: 0;
+    text-decoration: underline;
+  }
+
+  /* Markdown rendering */
+  .md-body p { margin: 0 0 8px; }
+  .md-body p:last-child { margin-bottom: 0; }
+  .md-body strong { font-weight: 600; }
+  .md-body em { font-style: italic; }
+  .md-body ul, .md-body ol { padding-left: 20px; margin: 4px 0 8px; }
+  .md-body li { margin: 2px 0; }
+  .md-body h2, .md-body h3 { font-size: 1rem; font-weight: 600; margin: 10px 0 4px; }
+  .md-body code { background: #f0f0ea; padding: 1px 4px; border-radius: 3px; font-size: 0.88em; }
+  .md-body a { color: #1a7a3a; }
+  .md-body table { border-collapse: collapse; font-size: 0.88em; margin: 8px 0; }
+  .md-body th, .md-body td { border: 1px solid #d0d0c8; padding: 4px 10px; }
+  .md-body th { background: #f0f0ea; }
+
+  .thinking {
+    align-self: flex-start;
+    color: #888;
+    font-size: 0.88rem;
+    font-style: italic;
+    animation: pulse 1.2s ease-in-out infinite;
+  }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+
+  .input-row {
+    display: flex;
+    gap: 10px;
+    padding: 16px 24px;
+    background: #fff;
+    border-top: 1px solid #e0e0d8;
+    flex-shrink: 0;
+  }
+  #input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid #d0d0c8;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    resize: none;
+    min-height: 42px;
+    max-height: 120px;
+    font-family: inherit;
+  }
+  #input:focus { border-color: #1a3a2a; }
+  #send-btn {
+    background: #1a3a2a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0 20px;
+    font-size: 0.95rem;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  #send-btn:disabled { opacity: 0.5; cursor: default; }
+
+  /* ── Save panel column ── */
+  .save-col {
+    width: 320px;
+    flex-shrink: 0;
+    border-left: 1px solid #e0e0d8;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding: 20px;
+  }
+  .save-col h2 {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #1a3a2a;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+  .save-col.hidden { display: none; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: 0.8rem; font-weight: 500; color: #555; margin-bottom: 4px; }
+  .field input, .field textarea, .field select {
+    width: 100%;
+    padding: 7px 10px;
+    border: 1px solid #d0d0c8;
+    border-radius: 6px;
+    font-size: 0.88rem;
+    font-family: inherit;
+    outline: none;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus { border-color: #1a3a2a; }
+  .field textarea { min-height: 140px; resize: vertical; }
+  #save-btn {
+    width: 100%;
+    background: #1a3a2a;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    margin-top: 4px;
+  }
+  #save-btn:disabled { opacity: 0.5; }
+  #save-status { font-size: 0.82rem; margin-top: 8px; min-height: 18px; }
+  #save-status.ok { color: #1a7a3a; }
+  #save-status.err { color: #c0392b; }
+
+  @media (max-width: 700px) {
+    .save-col { display: none !important; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <span>⛰️</span>
+  <h1>Dolomites Trip Wiki</h1>
+</header>
+
+<div class="layout">
+  <div class="chat-col">
+    <div id="messages">
+      <div class="msg assistant">
+        <div class="md-body"><p>Hi! Ask me anything about your September 2026 Dolomites trip. I'll look it up in the wiki.</p></div>
+      </div>
+    </div>
+    <div class="input-row">
+      <textarea id="input" placeholder="Ask a question about the trip…" rows="1"></textarea>
+      <button id="send-btn">Send</button>
+    </div>
+  </div>
+
+  <div id="save-col" class="save-col hidden">
+    <h2>Save to Wiki</h2>
+    <div class="field">
+      <label for="save-title">Page title</label>
+      <input type="text" id="save-title" placeholder="e.g. Via Ferrata Gear">
+    </div>
+    <div class="field">
+      <label for="save-slug">Page slug</label>
+      <input type="text" id="save-slug" placeholder="e.g. via-ferrata-gear">
+    </div>
+    <div class="field">
+      <label for="save-section">Wiki section</label>
+      <select id="save-section">
+        <option value="planning">Planning &amp; Overview</option>
+        <option value="activities">Activities</option>
+        <option value="areas">Areas</option>
+        <option value="logistics">Logistics</option>
+      </select>
+    </div>
+    <div class="field">
+      <label for="save-content">Content</label>
+      <textarea id="save-content"></textarea>
+    </div>
+    <button id="save-btn">Save page</button>
+    <div id="save-status"></div>
+  </div>
+</div>
+
+<script>
+  const messagesEl = document.getElementById('messages');
+  const inputEl    = document.getElementById('input');
+  const sendBtn    = document.getElementById('send-btn');
+  const saveCol    = document.getElementById('save-col');
+  const saveTitle  = document.getElementById('save-title');
+  const saveSlug   = document.getElementById('save-slug');
+  const saveContent= document.getElementById('save-content');
+  const saveSection= document.getElementById('save-section');
+  const saveBtn    = document.getElementById('save-btn');
+  const saveStatus = document.getElementById('save-status');
+
+  let sessionId = sessionStorage.getItem('session_id');
+
+  async function initSession() {
+    if (!sessionId) {
+      const res = await fetch('/session', { method: 'POST' });
+      const data = await res.json();
+      sessionId = data.session_id;
+      sessionStorage.setItem('session_id', sessionId);
+    }
+  }
+
+  // ── Markdown renderer ──────────────────────────────────────────
+  function renderMd(text) {
+    let html = escapeHtml(text);
+
+    // Headers
+    html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
+    html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
+
+    // Bold / italic
+    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+
+    // Inline code
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // Wiki links [[page-name]]
+    html = html.replace(/\[\[([^\]]+)\]\]/g, (_, slug) =>
+      `<a href="#" onclick="wikiLink('${slug}');return false;" class="wiki-link">[[${slug}]]</a>`
+    );
+
+    // Tables (simple: lines starting with |)
+    html = html.replace(/((?:\|[^\n]+\|\n)+)/g, (block) => {
+      const rows = block.trim().split('\n');
+      let table = '<table>';
+      rows.forEach((row, i) => {
+        if (row.match(/^\|[-| ]+\|$/)) return; // separator row
+        const cells = row.split('|').slice(1, -1);
+        const tag = i === 0 ? 'th' : 'td';
+        table += '<tr>' + cells.map(c => `<${tag}>${c.trim()}</${tag}>`).join('') + '</tr>';
+      });
+      return table + '</table>\n';
+    });
+
+    // Unordered lists
+    html = html.replace(/((?:^- .+\n?)+)/gm, (block) => {
+      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^- /, '')}</li>`).join('');
+      return `<ul>${items}</ul>`;
+    });
+
+    // Ordered lists
+    html = html.replace(/((?:^\d+\. .+\n?)+)/gm, (block) => {
+      const items = block.trim().split('\n').map(l => `<li>${l.replace(/^\d+\. /, '')}</li>`).join('');
+      return `<ol>${items}</ol>`;
+    });
+
+    // Paragraphs (double newline)
+    html = html.replace(/\n{2,}/g, '</p><p>');
+    html = '<p>' + html + '</p>';
+    html = html.replace(/<p><\/p>/g, '');
+    html = html.replace(/<p>(<(?:h[23]|ul|ol|table))/g, '$1');
+    html = html.replace(/(<\/(?:h[23]|ul|ol|table)>)<\/p>/g, '$1');
+
+    // Single newlines inside paragraphs
+    html = html.replace(/([^>])\n([^<])/g, '$1<br>$2');
+
+    return html;
+  }
+
+  function escapeHtml(str) {
+    return str
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  function wikiLink(slug) {
+    inputEl.value = `Tell me about [[${slug}]]`;
+    inputEl.focus();
+  }
+
+  // ── Append messages ────────────────────────────────────────────
+  function appendUser(text) {
+    const div = document.createElement('div');
+    div.className = 'msg user';
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    scrollBottom();
+  }
+
+  function appendThinking() {
+    const div = document.createElement('div');
+    div.className = 'thinking';
+    div.id = 'thinking';
+    div.textContent = 'Looking up the wiki…';
+    messagesEl.appendChild(div);
+    scrollBottom();
+    return div;
+  }
+
+  function appendAssistant(answer, sources, offerSave) {
+    const div = document.createElement('div');
+    div.className = 'msg assistant';
+
+    const body = document.createElement('div');
+    body.className = 'md-body';
+    body.innerHTML = renderMd(answer);
+    div.appendChild(body);
+
+    if (sources && sources.length) {
+      const sourcesDiv = document.createElement('div');
+      sourcesDiv.className = 'sources';
+      sources.forEach(s => {
+        const badge = document.createElement('span');
+        badge.className = 'badge';
+        badge.textContent = s;
+        sourcesDiv.appendChild(badge);
+      });
+      div.appendChild(sourcesDiv);
+    }
+
+    if (offerSave) {
+      const hint = document.createElement('div');
+      hint.className = 'save-hint';
+      hint.innerHTML = 'This answer looks worth saving. <button onclick="openSavePanel(this)">Save to wiki →</button>';
+      hint.dataset.answer = answer;
+      div.appendChild(hint);
+    }
+
+    messagesEl.appendChild(div);
+    scrollBottom();
+  }
+
+  function scrollBottom() {
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+  }
+
+  // ── Save panel ─────────────────────────────────────────────────
+  function openSavePanel(btn) {
+    const answer = btn.closest('.save-hint').dataset.answer;
+    saveContent.value = answer;
+    saveTitle.value = '';
+    saveSlug.value = '';
+    saveStatus.textContent = '';
+    saveStatus.className = '';
+    saveCol.classList.remove('hidden');
+    saveTitle.focus();
+  }
+
+  saveTitle.addEventListener('input', () => {
+    saveSlug.value = saveTitle.value
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-|-$/g, '');
+  });
+
+  saveBtn.addEventListener('click', async () => {
+    const slug = saveSlug.value.trim();
+    const title = saveTitle.value.trim();
+    const content = saveContent.value.trim();
+
+    if (!slug || !title || !content) {
+      saveStatus.textContent = 'Please fill in title, slug, and content.';
+      saveStatus.className = 'err';
+      return;
+    }
+
+    saveBtn.disabled = true;
+    saveStatus.textContent = 'Saving…';
+    saveStatus.className = '';
+
+    try {
+      const res = await fetch('/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          session_id: sessionId,
+          page_title: title,
+          page_slug: slug,
+          content,
+          section: saveSection.value,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        saveStatus.textContent = `Saved as ${data.page_path}`;
+        saveStatus.className = 'ok';
+        saveBtn.disabled = false;
+      } else {
+        saveStatus.textContent = data.detail || 'Save failed.';
+        saveStatus.className = 'err';
+        saveBtn.disabled = false;
+      }
+    } catch (e) {
+      saveStatus.textContent = 'Network error.';
+      saveStatus.className = 'err';
+      saveBtn.disabled = false;
+    }
+  });
+
+  // ── Send message ───────────────────────────────────────────────
+  async function send() {
+    const text = inputEl.value.trim();
+    if (!text || sendBtn.disabled) return;
+
+    inputEl.value = '';
+    inputEl.style.height = 'auto';
+    sendBtn.disabled = true;
+
+    appendUser(text);
+    const thinkEl = appendThinking();
+
+    try {
+      const res = await fetch('/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ session_id: sessionId, message: text }),
+      });
+      const data = await res.json();
+      thinkEl.remove();
+      if (res.ok) {
+        appendAssistant(data.answer, data.sources, data.offer_save);
+      } else {
+        appendAssistant('Sorry, something went wrong: ' + (data.detail || res.statusText), [], false);
+      }
+    } catch (e) {
+      thinkEl.remove();
+      appendAssistant('Network error — is the server running?', [], false);
+    }
+
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+
+  sendBtn.addEventListener('click', send);
+
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      send();
+    }
+  });
+
+  // Auto-resize textarea
+  inputEl.addEventListener('input', () => {
+    inputEl.style.height = 'auto';
+    inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
+  });
+
+  // ── Init ───────────────────────────────────────────────────────
+  initSession().catch(console.error);
+</script>
+</body>
+</html>

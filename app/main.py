@@ -1,3 +1,4 @@
+import logging
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
@@ -6,6 +7,12 @@ from fastapi.staticfiles import StaticFiles
 
 from . import claude_client, session_store, wiki_utils
 from .models import ChatRequest, ChatResponse, SaveRequest, SaveResponse, SessionResponse
+
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
+    datefmt="%H:%M:%S",
+)
 
 app = FastAPI(title="Dolomites Wiki Chatbot")
 

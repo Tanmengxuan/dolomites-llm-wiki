@@ -13,6 +13,7 @@ class ChatResponse(BaseModel):
     sources: list[str]
     offer_save: bool
     session_id: str
+    intent: Literal["wiki_qa", "web_search", "ingest"] = "wiki_qa"
 
 
 class SaveRequest(BaseModel):

@@ -12,9 +12,15 @@ logger = logging.getLogger(__name__)
 PROJECT_ROOT = Path(__file__).parent.parent.parent
 
 
-async def run(session_id: str, user_message: str) -> ChatResponse:
+async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
     logger.info("[ingest_agent] Starting (session=%s)", session_id[:8])
     logger.info("[ingest_agent] Instruction: %s", user_message)
+
+    prompt = (
+        f"{context}\n\nCurrent instruction: {user_message}"
+        if context
+        else user_message
+    )
 
     options = ClaudeAgentOptions(
         tools=["Read", "Write", "Edit"],
@@ -28,7 +34,7 @@ async def run(session_id: str, user_message: str) -> ChatResponse:
     assistant_parts: list[str] = []
 
     try:
-        async for msg in query(prompt=user_message, options=options):
+        async for msg in query(prompt=prompt, options=options):
             if isinstance(msg, ResultMessage):
                 logger.info(
                     "[ingest_agent] ResultMessage — turns: %d, cost: $%s",

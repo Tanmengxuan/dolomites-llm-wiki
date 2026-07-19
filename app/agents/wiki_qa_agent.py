@@ -8,7 +8,7 @@ from app.skills.wiki_qa import identify, synthesize
 logger = logging.getLogger(__name__)
 
 
-async def run(session_id: str, user_message: str) -> ChatResponse:
+async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
     logger.info("[wiki_qa_agent] Starting (session=%s)", session_id[:8])
 
     known_pages = set(wiki_utils.list_wiki_pages())
@@ -16,7 +16,7 @@ async def run(session_id: str, user_message: str) -> ChatResponse:
 
     logger.info("[wiki_qa_agent] Step 1: identifying relevant pages")
     valid_pages = await asyncio.to_thread(
-        identify.identify_pages, user_message, known_pages
+        identify.identify_pages, user_message, known_pages, context
     )
 
     if not valid_pages:
@@ -35,7 +35,7 @@ async def run(session_id: str, user_message: str) -> ChatResponse:
     logger.info("[wiki_qa_agent] Step 1 result: %s", valid_pages)
     logger.info("[wiki_qa_agent] Step 2: synthesizing answer")
     answer, offer_save = await asyncio.to_thread(
-        synthesize.synthesize_answer, session_id, user_message, valid_pages
+        synthesize.synthesize_answer, session_id, user_message, valid_pages, context
     )
 
     session_store.append_user(session_id, user_message)

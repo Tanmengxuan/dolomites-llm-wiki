@@ -12,6 +12,7 @@ def synthesize_answer(
     session_id: str,
     user_message: str,
     page_slugs: list[str],
+    context: str = "",
 ) -> tuple[str, bool]:
     logger.info("[synthesize] Reading pages: %s", page_slugs)
     pages = wiki_utils.read_pages(page_slugs)
@@ -35,6 +36,11 @@ def synthesize_answer(
             "cache_control": {"type": "ephemeral"},
         },
     ]
+    if context:
+        system_content.append({
+            "type": "text",
+            "text": f"Conversation context (from prior turns across all intents):\n{context}",
+        })
 
     history = session_store.get_or_create(session_id)
     messages = history + [{"role": "user", "content": user_message}]

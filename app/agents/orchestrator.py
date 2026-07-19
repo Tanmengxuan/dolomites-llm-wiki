@@ -16,19 +16,26 @@ _SYSTEM = (
     "(weather, current prices, trail conditions, real-time URLs)\n"
     "- ingest: instruction to read a source file and update the wiki "
     "(\"ingest raw/...\", \"add this to the wiki\", \"update wiki with...\")\n"
+    "If prior conversation context is provided, use it to resolve ambiguous references "
+    "(e.g. \"add that to the wiki\" after a web search = ingest).\n"
     "Reply with exactly one word: wiki_qa, web_search, or ingest."
 )
 
 Intent = Literal["wiki_qa", "web_search", "ingest"]
 
 
-def classify_intent(user_message: str) -> Intent:
+def classify_intent(user_message: str, context: str = "") -> Intent:
+    content = (
+        f"{context}\n\nCurrent message: {user_message}"
+        if context
+        else user_message
+    )
     try:
         response = get_client().messages.create(
             model=_MODEL,
             max_tokens=10,
             system=_SYSTEM,
-            messages=[{"role": "user", "content": user_message}],
+            messages=[{"role": "user", "content": content}],
         )
         raw = response.content[0].text.strip().lower()
         if raw in ("wiki_qa", "web_search", "ingest"):

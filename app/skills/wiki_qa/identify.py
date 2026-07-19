@@ -9,9 +9,11 @@ logger = logging.getLogger(__name__)
 MODEL = "claude-sonnet-4-6"
 
 
-def identify_pages(user_message: str, known_pages: set[str]) -> list[str]:
+def identify_pages(user_message: str, known_pages: set[str], context: str = "") -> list[str]:
     index_content = wiki_utils.read_index()
+    context_section = f"Conversation context:\n{context}\n\n" if context else ""
     prompt = (
+        f"{context_section}"
         f"Wiki Table of Contents:\n---\n{index_content}\n---\n\n"
         f"User question: {user_message}\n\n"
         "Return the JSON array of relevant page slugs."

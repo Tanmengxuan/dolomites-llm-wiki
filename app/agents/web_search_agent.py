@@ -9,9 +9,15 @@ from app.skills.web_search.prompts import WEB_SEARCH_SYSTEM
 logger = logging.getLogger(__name__)
 
 
-async def run(session_id: str, user_message: str) -> ChatResponse:
+async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
     logger.info("[web_search_agent] Starting (session=%s)", session_id[:8])
     logger.info("[web_search_agent] Query: %s", user_message)
+
+    prompt = (
+        f"{context}\n\nCurrent request: {user_message}"
+        if context
+        else user_message
+    )
 
     options = ClaudeAgentOptions(
         tools=["WebSearch", "WebFetch"],
@@ -24,7 +30,7 @@ async def run(session_id: str, user_message: str) -> ChatResponse:
     assistant_parts: list[str] = []
 
     try:
-        async for msg in query(prompt=user_message, options=options):
+        async for msg in query(prompt=prompt, options=options):
             if isinstance(msg, ResultMessage):
                 logger.info(
                     "[web_search_agent] ResultMessage — turns: %d, cost: $%s",

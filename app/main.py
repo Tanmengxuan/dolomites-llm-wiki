@@ -38,10 +38,10 @@ def delete_session(session_id: str):
 
 
 @app.post("/chat", response_model=ChatResponse)
-def chat(req: ChatRequest):
+async def chat(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=422, detail="Message cannot be empty")
-    return claude_client.run_chat_turn(req.session_id, req.message.strip())
+    return await claude_client.run_chat_turn(req.session_id, req.message.strip())
 
 
 @app.post("/save", response_model=SaveResponse)

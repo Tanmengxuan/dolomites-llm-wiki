@@ -6,7 +6,7 @@ _web_search_store: dict[str, list[dict]] = {}
 
 _MAX_MESSAGES = 20
 _MAX_EXCHANGES = 10
-_MAX_RESPONSE_CHARS = 300
+_MAX_RESPONSE_CHARS = 1000
 
 
 def new_session_id() -> str:

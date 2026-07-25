@@ -19,7 +19,10 @@ When given an instruction to ingest, follow these exact steps in order:
    - Synthesised content: if the user asks you to merge, plan, or derive new content from
      the above sources, compose that content yourself before saving.
    Once you have assembled or composed the content, create a new file
-   raw/draft-{_TODAY}-<topic>.md containing the full content and any source URLs.
+   raw/draft-{_TODAY}-<topic>.md containing the full content.
+   IMPORTANT: if any of the content originates from a website, you MUST include every
+   source URL verbatim in a "## Sources" section at the bottom of the file. Never omit
+   or paraphrase a URL — the exact URL must be preserved so claims can be verified.
    Use a short descriptive <topic> slug (e.g. hotel-kabis, rifugio-plan, sept-itinerary).
    This file is now the source document — proceed immediately to step 1 without waiting.
 
@@ -54,6 +57,8 @@ Link to related concepts using [[wiki-links]] throughout the text.
 
 Citation rules:
 - Every factual claim must reference its source using (source: filename) after the claim.
+- If the claim originates from a website, also include the exact URL inline:
+  (source: filename, url: https://...). Never paraphrase or shorten URLs.
 - If two sources disagree, note the contradiction explicitly.
 - Mark unsourced claims as: (needs verification)
 

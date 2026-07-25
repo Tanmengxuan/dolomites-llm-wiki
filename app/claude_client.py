@@ -12,6 +12,7 @@ async def run_chat_turn(session_id: str, user_message: str) -> ChatResponse:
     logger.info("User: %s", user_message)
 
     context = session_store.get_context_string(session_id)
+    
     if context:
         logger.info("[claude_client] Context from %d previous exchange(s) retrieved",
                     len(session_store._exchange_store.get(session_id, [])))
@@ -21,8 +22,10 @@ async def run_chat_turn(session_id: str, user_message: str) -> ChatResponse:
 
     if intent == "web_search":
         response = await web_search_agent.run(session_id, user_message, context)
+        session_store.append_web_search(session_id, user_message, response.answer)
     elif intent == "ingest":
-        response = await ingest_agent.run(session_id, user_message, context)
+        web_search_history = session_store.get_web_search_history(session_id)
+        response = await ingest_agent.run(session_id, user_message, context, web_search_history)
     else:
         response = await wiki_qa_agent.run(session_id, user_message, context)
 

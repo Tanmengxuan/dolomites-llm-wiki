@@ -46,15 +46,17 @@ def _run_in_proactor(prompt: str, options: ClaudeAgentOptions) -> tuple[str | No
         loop.close()
 
 
-async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
+async def run(session_id: str, user_message: str, context: str = "", web_search_history: str = "") -> ChatResponse:
     logger.info("[ingest_agent] Starting (session=%s)", session_id[:8])
     logger.info("[ingest_agent] Instruction: %s", user_message)
 
-    prompt = (
-        f"{context}\n\nCurrent instruction: {user_message}"
-        if context
-        else user_message
-    )
+    parts = []
+    if context:
+        parts.append(context)
+    if web_search_history:
+        parts.append(web_search_history)
+    parts.append(f"Current instruction: {user_message}")
+    prompt = "\n\n".join(parts)
 
     options = ClaudeAgentOptions(
         tools=["Read", "Write", "Edit"],

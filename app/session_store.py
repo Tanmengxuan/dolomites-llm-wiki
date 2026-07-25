@@ -2,6 +2,7 @@ import uuid
 
 _store: dict[str, list[dict]] = {}
 _exchange_store: dict[str, list[dict]] = {}
+_web_search_store: dict[str, list[dict]] = {}
 
 _MAX_MESSAGES = 20
 _MAX_EXCHANGES = 10
@@ -55,9 +56,28 @@ def get_context_string(session_id: str) -> str:
     return "\n".join(lines).strip()
 
 
+def append_web_search(session_id: str, user: str, assistant: str) -> None:
+    if session_id not in _web_search_store:
+        _web_search_store[session_id] = []
+    _web_search_store[session_id].append({"user": user, "assistant": assistant})
+
+
+def get_web_search_history(session_id: str) -> str:
+    results = _web_search_store.get(session_id, [])
+    if not results:
+        return ""
+    lines = ["Web search results from this session:"]
+    for i, r in enumerate(results, 1):
+        lines.append(f"\n--- Web Search {i} ---")
+        lines.append(f"Query: {r['user']}")
+        lines.append(f"Result:\n{r['assistant']}")
+    return "\n".join(lines)
+
+
 def clear(session_id: str) -> None:
     _store.pop(session_id, None)
     _exchange_store.pop(session_id, None)
+    _web_search_store.pop(session_id, None)
 
 
 def _trim(session_id: str) -> None:

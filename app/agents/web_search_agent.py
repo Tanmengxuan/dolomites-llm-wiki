@@ -15,7 +15,7 @@ _WEB_SEARCH_TOOL = {
 
 def _run_search(prompt: str) -> str:
     response = get_client().messages.create(
-        model="claude-opus-4-8",
+        model="claude-sonnet-4-6",
         max_tokens=8192,
         system=WEB_SEARCH_SYSTEM,
         tools=[_WEB_SEARCH_TOOL],

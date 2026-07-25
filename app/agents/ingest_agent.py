@@ -64,6 +64,7 @@ async def run(session_id: str, user_message: str, context: str = "", web_search_
         permission_mode="bypassPermissions",
         cwd=PROJECT_ROOT,
         max_turns=20,
+        model="claude-sonnet-4-6",
     )
 
     result_text: str | None = None

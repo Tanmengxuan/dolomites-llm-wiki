@@ -89,15 +89,15 @@
 ## Part 1 (day hikes)
 
 1. Val Di Funes  
-   6 Sep (Sun) \- warm-up hike: [Viewpoint Santa Maddalena](https://www.alltrails.com/trail/italy/south-tyrol/punto-panoramico-santa-maddalena) (1.5 hrs to and fro)  
-   7 Sep (Mon) \- [Adolf Munkel Trail](https://www.alltrails.com/trail/italy/south-tyrol/via-delle-odle-zanser-alm-rifugio-delle-odle-malga-dusler) (3.5 hrs loop) / [Tullen summit](https://www.moonhoneytravel.com/tullen-peak-hike-odle-d-eores-dolomites/) (6 hours)  
+  7 Sep (Mon) \- warm-up hike: [Viewpoint Santa Maddalena](https://www.alltrails.com/trail/italy/south-tyrol/punto-panoramico-santa-maddalena) (1.5 hrs to and fro)
+   8 Sep (Tue) \- [Adolf Munkel Trail](https://www.alltrails.com/trail/italy/south-tyrol/via-delle-odle-zanser-alm-rifugio-delle-odle-malga-dusler) (3.5 hrs loop) / [Tullen summit](https://www.moonhoneytravel.com/tullen-peak-hike-odle-d-eores-dolomites/) (6 hours)
 2. Seceda   
-   8 Sep (Tue) \- [Santa Cristina \- Rifugio Firenze \- Seceda](https://www.alltrails.com/trail/italy/south-tyrol/santa-cristina-rifugio-firenze-seceda)  
+   9 Sep (Wed) \- [Santa Cristina \- Rifugio Firenze \- Seceda](https://www.alltrails.com/trail/italy/south-tyrol/santa-cristina-rifugio-firenze-seceda)
 3. 12 Sep (Sat) [Via ferrata](https://www.alltrails.com/trail/italy/south-tyrol/via-ferrata-brigata-tridentina-al-pisciadu) [Brigata Tridentina](https://inafarawayland.com/via-ferrata-brigata-tridentina/) (Should do this before Sassolungo as this place is closer to Seceda)  
    1. Famous for its suspension bridge  
    2. Has a Rifugio at the top (for a meal break)  
    3. Summit has nice views too  
-4. 9 Sep (Wed) \- Rest day  
+4. TBC \- Rest day
    1. Exploring Dolomites [hidden villages](https://www.google.com/maps/dir/Santa+Cristina+Valgardena,+39047+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy/Gardena+Pass,+39033+Corvara,+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy/Calfosch,+39033+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy/Via+S.+Senese,+39030+San+Genesio+BZ,+Italy/Luch+De+Survisc+Agriturismo,+Cians,+13,+39030+La+Valle+BZ,+Italy/Str.+Picolin,+71,+39030+Marebbe+BZ,+Italy/W%C3%BCrzjoch,+39030+San+Martin+de+Tor,+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy/@46.5930636,11.753244,11.67z/data=!3m1!5s0x47783cd723237783:0x150d2a750dcad81b!4m44!4m43!1m5!1m1!1s0x4778136248baa5db:0xd60b93a48456f1d4!2m2!1d11.7222522!2d46.5579405!1m5!1m1!1s0x47781565cba253b9:0xcc38e293b7108587!2m2!1d11.809444!2d46.55!1m5!1m1!1s0x47783fb14fbd4961:0xa070989abe48be0!2m2!1d11.8546144!2d46.5534301!1m5!1m1!1s0x47783cda68b36767:0x3ca391a2abd49fc1!2m2!1d11.9241543!2d46.658242!1m5!1m1!1s0x47783cd7af0db73f:0x2974a5fcc6ac03b5!2m2!1d11.9216843!2d46.6613158!1m5!1m1!1s0x477822981e81afff:0xc3aca0a64577f90e!2m2!1d11.8915197!2d46.6931095!1m5!1m1!1s0x4778177bfcad1ef3:0x4e21093f63ed3cca!2m2!1d11.814167!2d46.675!3e0?entry=ttu&g_ep=EgoyMDI2MDIxOC4wIKXMDSoASAFQAw%3D%3D)  
    2. OR Day trip to [Bolzano](https://embracesomeplace.com/bolzano-italy/)   
    3. OR cycling in [Alpe di Siusi](https://www.alltrails.com/trail/italy/south-tyrol/ortisei-alpe-siusi)  

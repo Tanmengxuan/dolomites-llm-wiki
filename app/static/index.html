@@ -359,6 +359,23 @@
       `<a href="#" onclick="wikiLink('${slug}');return false;" class="wiki-link">[[${slug}]]</a>`
     );
 
+    // Full URLs → clickable links
+    html = html.replace(/https?:\/\/[^\s<>"'&)]+/g, url =>
+      `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
+    );
+
+    // Bare domain names inside (source: ...) citations
+    html = html.replace(/\(source:\s*([^)]+)\)/g, (_, content) => {
+      const parts = content.split(',').map(part => {
+        const d = part.trim();
+        const isDomain = /^[\w-]+(\.[\w-]+)+$/.test(d) && !/\.(md|pdf|txt)$/i.test(d);
+        return isDomain
+          ? `<a href="https://${d}" target="_blank" rel="noopener noreferrer">${d}</a>`
+          : d;
+      });
+      return `(source: ${parts.join(', ')})`;
+    });
+
     // Tables (simple: lines starting with |)
     html = html.replace(/((?:\|[^\n]+\|\n)+)/g, (block) => {
       const rows = block.trim().split('\n');

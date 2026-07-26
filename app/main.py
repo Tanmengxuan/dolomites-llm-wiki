@@ -23,6 +23,7 @@ logging.basicConfig(
 app = FastAPI(title="Dolomites Wiki Chatbot")
 
 _STATIC_DIR = Path(__file__).parent / "static"
+_PROJECT_ROOT = Path(__file__).parent.parent
 app.mount("/static", StaticFiles(directory=str(_STATIC_DIR)), name="static")
 
 
@@ -48,6 +49,29 @@ async def chat(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=422, detail="Message cannot be empty")
     return await claude_client.run_chat_turn(req.session_id, req.message.strip())
+
+
+@app.get("/files")
+def list_files():
+    result = {}
+    for folder in ("raw", "wiki"):
+        folder_path = _PROJECT_ROOT / folder
+        result[folder] = sorted(p.name for p in folder_path.glob("*.md")) if folder_path.exists() else []
+    return result
+
+
+@app.get("/file")
+def read_file(path: str):
+    if not (path.startswith("raw/") or path.startswith("wiki/")):
+        raise HTTPException(status_code=400, detail="Invalid path")
+    resolved = (_PROJECT_ROOT / path).resolve()
+    try:
+        resolved.relative_to(_PROJECT_ROOT.resolve())
+    except ValueError:
+        raise HTTPException(status_code=400, detail="Invalid path")
+    if not resolved.is_file():
+        raise HTTPException(status_code=404, detail="File not found")
+    return {"content": resolved.read_text(encoding="utf-8"), "path": path}
 
 
 @app.post("/save", response_model=SaveResponse)

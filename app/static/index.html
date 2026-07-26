@@ -211,6 +211,49 @@
   @media (max-width: 700px) {
     .save-col { display: none !important; }
   }
+
+  /* ── File browser modal ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    z-index: 100;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.open { display: flex; }
+  .modal {
+    background: #fff;
+    border-radius: 12px;
+    width: min(640px, 92vw);
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  }
+  .modal-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 18px;
+    border-bottom: 1px solid #e0e0d8;
+    flex-shrink: 0;
+  }
+  .modal-header h3 { flex: 1; font-size: 0.95rem; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .modal-close { background: none; border: none; font-size: 1.1rem; cursor: pointer; color: #888; padding: 2px 6px; }
+  .modal-back { background: none; border: none; font-size: 0.85rem; color: #1a7a3a; cursor: pointer; padding: 2px 0; text-decoration: underline; white-space: nowrap; }
+  .modal-body { flex: 1; overflow-y: auto; padding: 16px 18px; }
+  .file-group { margin-bottom: 16px; }
+  .file-group h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; color: #999; margin-bottom: 6px; font-weight: 600; }
+  .file-item { display: block; width: 100%; text-align: left; background: none; border: none; padding: 5px 8px; border-radius: 6px; font-size: 0.85rem; color: #1a3a2a; cursor: pointer; font-family: monospace; }
+  .file-item:hover { background: #f0f5f0; }
+  .file-content { font-family: monospace; font-size: 0.82rem; white-space: pre-wrap; line-height: 1.6; color: #1a1a1a; }
+  .badge { cursor: pointer; }
+  .badge:hover { background: #d4ebd4; }
+  #files-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+  #files-btn:hover { background: rgba(255,255,255,0.25); }
 </style>
 </head>
 <body>
@@ -218,6 +261,7 @@
 <header>
   <span>⛰️</span>
   <h1>Dolomites Trip Wiki</h1>
+  <button id="files-btn" onclick="openFileBrowser()">📄 Files</button>
 </header>
 
 <div class="layout">
@@ -258,6 +302,17 @@
     </div>
     <button id="save-btn">Save page</button>
     <div id="save-status"></div>
+  </div>
+</div>
+
+<div id="file-modal" class="modal-overlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-back" id="modal-back" onclick="showFileList()" style="display:none">← Back</button>
+      <h3 id="modal-title">Wiki Files</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
   </div>
 </div>
 
@@ -350,8 +405,7 @@
   }
 
   function wikiLink(slug) {
-    inputEl.value = `Tell me about [[${slug}]]`;
-    inputEl.focus();
+    openFile(`wiki/${slug.replace(/\.md$/, '')}.md`);
   }
 
   // ── Append messages ────────────────────────────────────────────
@@ -386,9 +440,11 @@
       const sourcesDiv = document.createElement('div');
       sourcesDiv.className = 'sources';
       sources.forEach(s => {
-        const badge = document.createElement('span');
+        const badge = document.createElement('button');
         badge.className = 'badge';
         badge.textContent = s;
+        const slug = s.replace(/\.md$/, '');
+        badge.onclick = () => openFile(`wiki/${slug}.md`);
         sourcesDiv.appendChild(badge);
       });
       div.appendChild(sourcesDiv);
@@ -521,6 +577,58 @@
     inputEl.style.height = 'auto';
     inputEl.style.height = Math.min(inputEl.scrollHeight, 120) + 'px';
   });
+
+  // ── File browser ───────────────────────────────────────────────
+  const fileModal  = document.getElementById('file-modal');
+  const modalBody  = document.getElementById('modal-body');
+  const modalTitle = document.getElementById('modal-title');
+  const modalBack  = document.getElementById('modal-back');
+  let _filesCache  = null;
+
+  async function openFileBrowser() {
+    fileModal.classList.add('open');
+    await showFileList();
+  }
+
+  async function showFileList() {
+    modalTitle.textContent = 'Wiki Files';
+    modalBack.style.display = 'none';
+    if (!_filesCache) {
+      modalBody.innerHTML = '<p style="color:#888;font-size:0.88rem">Loading…</p>';
+      const res = await fetch('/files');
+      _filesCache = await res.json();
+    }
+    let html = '';
+    for (const [folder, files] of Object.entries(_filesCache)) {
+      if (!files.length) continue;
+      html += `<div class="file-group"><h4>${folder}/</h4>`;
+      files.forEach(f => {
+        html += `<button class="file-item" onclick="openFile('${folder}/${f}')">${f}</button>`;
+      });
+      html += '</div>';
+    }
+    modalBody.innerHTML = html || '<p style="color:#888">No files found.</p>';
+  }
+
+  async function openFile(path) {
+    fileModal.classList.add('open');
+    modalTitle.textContent = path;
+    modalBack.style.display = '';
+    modalBody.innerHTML = '<p style="color:#888;font-size:0.88rem">Loading…</p>';
+    const res = await fetch(`/file?path=${encodeURIComponent(path)}`);
+    if (!res.ok) {
+      modalBody.innerHTML = '<p style="color:#c0392b;font-size:0.88rem">File not found.</p>';
+      return;
+    }
+    const data = await res.json();
+    modalBody.innerHTML = `<div class="md-body">${renderMd(data.content)}</div>`;
+  }
+
+  function closeModal() {
+    fileModal.classList.remove('open');
+  }
+
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
   // ── Init ───────────────────────────────────────────────────────
   initSession().catch(console.error);

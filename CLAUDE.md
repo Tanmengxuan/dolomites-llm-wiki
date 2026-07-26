@@ -19,15 +19,17 @@ wiki/log.md   -- append-only record of all operations
 
 ## Ingest workflow
 
-When the user adds a new source to `raw/` and asks you to ingest it:
+When the user adds a new source or made any changes to `raw/` and asks you to ingest it:
 
 1. Read the full source document
 2. Discuss key takeaways with the user before writing anything
 3. Create a summary page in `wiki/` named after the source
 4. Create or update concept pages for each major idea or entity
 5. Add wiki-links ([[page-name]]) to connect related pages
-6. Update `wiki/index.md` with new pages and one-line descriptions
-7. Append an entry to `wiki/log.md` with the date, source name, and what changed
+6. Add `wiki/index.md` with new pages and one-line descriptions
+7. Edit any file or content in the `wiki/` if any information has been updated in `raw/`.
+8. Remove any file or content in the `wiki/` if they cannot be found in `raw/` anymore.
+9. Append an entry to `wiki/log.md` with the date, source name, and what changed
 
 A single source may touch 10-15 wiki pages. That is normal.
 

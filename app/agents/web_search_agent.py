@@ -13,7 +13,7 @@ _WEB_SEARCH_TOOL = {
 }
 
 
-def _run_search(prompt: str) -> str:
+def _run_search(prompt: str) -> tuple[str, list[str]]:
     response = get_client().messages.create(
         model="claude-sonnet-4-6",
         max_tokens=8192,
@@ -21,8 +21,22 @@ def _run_search(prompt: str) -> str:
         tools=[_WEB_SEARCH_TOOL],
         messages=[{"role": "user", "content": prompt}],
     )
-    parts = [block.text for block in response.content if block.type == "text"]
-    return " ".join(parts).strip()
+    text_parts = []
+    sources: list[str] = []
+    seen: set[str] = set()
+    for block in response.content:
+        if block.type != "text":
+            continue
+        text_parts.append(block.text)
+        for citation in getattr(block, "citations", None) or []:
+            url = getattr(citation, "url", None)
+            if not url:
+                continue
+            text_parts.append(f" (source: {url})")
+            if url not in seen:
+                seen.add(url)
+                sources.append(url)
+    return "".join(text_parts).strip(), sources
 
 
 async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
@@ -36,18 +50,19 @@ async def run(session_id: str, user_message: str, context: str = "") -> ChatResp
     )
 
     answer = ""
+    sources: list[str] = []
     try:
-        answer = await asyncio.to_thread(_run_search, prompt)
+        answer, sources = await asyncio.to_thread(_run_search, prompt)
     except Exception:
         logger.exception("[web_search_agent] search failed")
 
     if not answer:
         answer = "I couldn't find relevant web information for your query."
 
-    logger.info("[web_search_agent] Done")
+    logger.info("[web_search_agent] Done (sources=%d)", len(sources))
     return ChatResponse(
         answer=answer,
-        sources=[],
+        sources=sources,
         offer_save=False,
         session_id=session_id,
         intent="web_search",

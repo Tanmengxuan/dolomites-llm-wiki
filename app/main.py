@@ -1,4 +1,5 @@
 import asyncio
+import json
 import sys
 
 if sys.platform == "win32":
@@ -8,10 +9,11 @@ import logging
 from pathlib import Path
 
 from fastapi import FastAPI, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import FileResponse, StreamingResponse
 from fastapi.staticfiles import StaticFiles
 
 from . import claude_client, session_store, wiki_utils
+from .agents import orchestrator
 from .models import ChatRequest, ChatResponse, SaveRequest, SaveResponse, SessionResponse
 
 logging.basicConfig(
@@ -19,6 +21,7 @@ logging.basicConfig(
     format="%(asctime)s [%(name)s] %(levelname)s: %(message)s",
     datefmt="%H:%M:%S",
 )
+logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Dolomites Wiki Chatbot")
 
@@ -44,11 +47,27 @@ def delete_session(session_id: str):
     session_store.clear(session_id)
 
 
-@app.post("/chat", response_model=ChatResponse)
+@app.post("/chat")
 async def chat(req: ChatRequest):
     if not req.message.strip():
         raise HTTPException(status_code=422, detail="Message cannot be empty")
-    return await claude_client.run_chat_turn(req.session_id, req.message.strip())
+
+    message = req.message.strip()
+
+    async def event_stream():
+        context = session_store.get_context_string(req.session_id)
+        intent = orchestrator.classify_intent(message, context)
+        yield f"data: {json.dumps({'type': 'intent', 'intent': intent})}\n\n"
+        try:
+            response = await claude_client.run_chat_turn(
+                req.session_id, message, intent=intent, context=context
+            )
+            yield f"data: {json.dumps({'type': 'response', **response.model_dump()})}\n\n"
+        except Exception as e:
+            logger.exception("Chat error")
+            yield f"data: {json.dumps({'type': 'error', 'detail': str(e)})}\n\n"
+
+    return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
 @app.get("/files")

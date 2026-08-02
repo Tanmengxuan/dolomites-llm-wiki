@@ -113,6 +113,9 @@
   .md-body h2, .md-body h3 { font-size: 1rem; font-weight: 600; margin: 10px 0 4px; }
   .md-body code { background: #f0f0ea; padding: 1px 4px; border-radius: 3px; font-size: 0.88em; }
   .md-body a { color: #1a7a3a; }
+  .inline-cite { font-size: 0.72em; color: #1a7a3a; text-decoration: none; vertical-align: super; margin-left: 1px; font-weight: 500; }
+  .inline-cite:hover { text-decoration: underline; }
+  .inline-cite.unverified { color: #999; }
   .md-body table { border-collapse: collapse; font-size: 0.88em; margin: 8px 0; }
   .md-body th, .md-body td { border: 1px solid #d0d0c8; padding: 4px 10px; }
   .md-body th { background: #f0f0ea; }
@@ -354,27 +357,33 @@
     // Inline code
     html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
 
+    // Standard markdown links [text](url)
+    html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, text, url) =>
+      `<a href="${url}" target="_blank" rel="noopener noreferrer">${text}</a>`
+    );
+
     // Wiki links [[page-name]]
     html = html.replace(/\[\[([^\]]+)\]\]/g, (_, slug) =>
       `<a href="#" onclick="wikiLink('${slug}');return false;" class="wiki-link">[[${slug}]]</a>`
     );
 
-    // Full URLs → clickable links
+    // Inline source citations: (source: https://...) → superscript link
+    html = html.replace(/\(source:\s*(https?:\/\/[^\s)<>"'&]+)\)/g, (_, url) => {
+      try {
+        const host = new URL(url).hostname.replace(/^www\./, '');
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-cite" title="${url}">[${host}]</a>`;
+      } catch {
+        return `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-cite">[src]</a>`;
+      }
+    });
+
+    // (source: unverified) → plain marker
+    html = html.replace(/\(source:\s*unverified\)/g, '<span class="inline-cite unverified">[unverified]</span>');
+
+    // Remaining bare URLs → clickable
     html = html.replace(/https?:\/\/[^\s<>"'&)]+/g, url =>
       `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
     );
-
-    // Bare domain names inside (source: ...) citations
-    html = html.replace(/\(source:\s*([^)]+)\)/g, (_, content) => {
-      const parts = content.split(',').map(part => {
-        const d = part.trim();
-        const isDomain = /^[\w-]+(\.[\w-]+)+$/.test(d) && !/\.(md|pdf|txt)$/i.test(d);
-        return isDomain
-          ? `<a href="https://${d}" target="_blank" rel="noopener noreferrer">${d}</a>`
-          : d;
-      });
-      return `(source: ${parts.join(', ')})`;
-    });
 
     // Tables (simple: lines starting with |)
     html = html.replace(/((?:\|[^\n]+\|\n)+)/g, (block) => {
@@ -434,11 +443,17 @@
     scrollBottom();
   }
 
+  const THINKING_LABELS = {
+    wiki_qa:    'Looking up the wiki…',
+    web_search: 'Searching the web…',
+    ingest:     'Updating the wiki…',
+  };
+
   function appendThinking() {
     const div = document.createElement('div');
     div.className = 'thinking';
     div.id = 'thinking';
-    div.textContent = 'Looking up the wiki…';
+    div.textContent = 'Thinking…';
     messagesEl.appendChild(div);
     scrollBottom();
     return div;
@@ -457,12 +472,23 @@
       const sourcesDiv = document.createElement('div');
       sourcesDiv.className = 'sources';
       sources.forEach(s => {
-        const badge = document.createElement('button');
-        badge.className = 'badge';
-        badge.textContent = s;
-        const slug = s.replace(/\.md$/, '');
-        badge.onclick = () => openFile(`wiki/${slug}.md`);
-        sourcesDiv.appendChild(badge);
+        if (s.startsWith('http')) {
+          const a = document.createElement('a');
+          a.className = 'badge';
+          a.href = s;
+          a.target = '_blank';
+          a.rel = 'noopener noreferrer';
+          try { a.textContent = new URL(s).hostname; } catch { a.textContent = s; }
+          a.title = s;
+          sourcesDiv.appendChild(a);
+        } else {
+          const badge = document.createElement('button');
+          badge.className = 'badge';
+          badge.textContent = s;
+          const slug = s.replace(/\.md$/, '');
+          badge.onclick = () => openFile(`wiki/${slug}.md`);
+          sourcesDiv.appendChild(badge);
+        }
       });
       div.appendChild(sourcesDiv);
     }
@@ -564,12 +590,39 @@
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ session_id: sessionId, message: text }),
       });
-      const data = await res.json();
-      thinkEl.remove();
-      if (res.ok) {
-        appendAssistant(data.answer, data.sources, data.offer_save);
-      } else {
+
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        thinkEl.remove();
         appendAssistant('Sorry, something went wrong: ' + (data.detail || res.statusText), [], false);
+        sendBtn.disabled = false;
+        inputEl.focus();
+        return;
+      }
+
+      const reader = res.body.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+        const parts = buffer.split('\n\n');
+        buffer = parts.pop();
+        for (const part of parts) {
+          if (!part.startsWith('data: ')) continue;
+          const data = JSON.parse(part.slice(6));
+          if (data.type === 'intent') {
+            thinkEl.textContent = THINKING_LABELS[data.intent] || 'Thinking…';
+          } else if (data.type === 'response') {
+            thinkEl.remove();
+            appendAssistant(data.answer, data.sources, data.offer_save);
+          } else if (data.type === 'error') {
+            thinkEl.remove();
+            appendAssistant('Sorry, something went wrong: ' + data.detail, [], false);
+          }
+        }
       }
     } catch (e) {
       thinkEl.remove();

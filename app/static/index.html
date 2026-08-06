@@ -344,6 +344,9 @@
 
   // ── Markdown renderer ──────────────────────────────────────────
   function renderMd(text) {
+    // Convert raw HTML anchor tags to markdown links before escaping,
+    // so the markdown pipeline handles them correctly.
+    text = text.replace(/<a\s+href="(https?:\/\/[^"]+)"[^>]*>([^<]+)<\/a>/gi, '[$2]($1)');
     let html = escapeHtml(text);
 
     // Headers
@@ -356,6 +359,11 @@
 
     // Inline code
     html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // Web search citations: CITE[name](url) → inline superscript badge [name]
+    html = html.replace(/CITE\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, name, url) =>
+      `<a href="${url}" target="_blank" rel="noopener noreferrer" class="inline-cite">[${name}]</a>`
+    );
 
     // Standard markdown links [text](url)
     html = html.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, text, url) =>
@@ -380,8 +388,8 @@
     // (source: unverified) → plain marker
     html = html.replace(/\(source:\s*unverified\)/g, '<span class="inline-cite unverified">[unverified]</span>');
 
-    // Remaining bare URLs → clickable
-    html = html.replace(/https?:\/\/[^\s<>"'&)]+/g, url =>
+    // Remaining bare URLs → clickable (skip URLs inside any HTML attribute value)
+    html = html.replace(/(?<![="'])(https?:\/\/[^\s<>"'&)]+)/g, url =>
       `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`
     );
 

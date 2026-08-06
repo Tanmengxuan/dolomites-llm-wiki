@@ -2,9 +2,9 @@
 
 **Summary**: Unresolved logistics and decisions that still need to be confirmed before the trip.
 
-**Sources**: 202609_dolomites.md
+**Sources**: 202609_dolomites.md, raw/draft-2026-07-26-bus-cortina-lago-di-braies.md
 
-**Last updated**: 2026-05-02
+**Last updated**: 2026-07-26
 
 ---
 
@@ -27,13 +27,14 @@
 
 ## Itinerary Decisions
 
-- [ ] Sept 7 (Mon): Adolf Munkel Trail or Tullen Summit?
-- [ ] Sept 9 (Wed, rest day): villages / Bolzano / Alpe di Siusi cycling?
+- [ ] Sept 8 (Tue): Adolf Munkel Trail or Tullen Summit?
+- [ ] Assign a date for the Part 1 rest day (currently unscheduled — previously Sept 9, but Seceda now occupies that date)
+- [ ] Rest day (date TBC): villages / Bolzano / Alpe di Siusi cycling?
 - [ ] Sept 13 (Sun): Marmolada or rest day in Cortina?
 
 ## Transportation
 
-- [ ] Check Südtirol Mobilität bus schedules for Sept 14 (Cortina → Lago di Braies)
+- [x] Check Südtirol Mobilität bus schedules for Sept 14 (Cortina → Lago di Braies) — **resolved 2026-07-26**: depart Cortina 08:20 (Bus 445), connect Dobbiaco ~09:05, Bus 442 to lake by ~09:40–10:00. Pre-book Bus 442 at https://www.prags.bz/en from mid-June. See [[draft-2026-07-26-bus-cortina-lago-di-braies]].
 - [ ] Plan return from Rifugio Croda da Lago to parked car on Sept 18
 
 ## Gear

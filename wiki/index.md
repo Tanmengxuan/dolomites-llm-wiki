@@ -26,8 +26,8 @@ A personal knowledge base for planning a September 2026 trip to the Dolomites, I
 
 | Page | Description |
 |------|-------------|
-| [[val-di-funes]] | Base for Sept 6–7; Santa Maddalena, Adolf Munkel Trail, Tullen Summit |
-| [[seceda]] | Iconic ridgeline hike on Sept 8 from Santa Cristina |
+| [[val-di-funes]] | Base for Sept 7–8; Santa Maddalena, Adolf Munkel Trail, Tullen Summit |
+| [[seceda]] | Iconic ridgeline hike on Sept 9 from Santa Cristina |
 | [[sassolungo]] | Circuit hike on Sept 10; chosen over Tre Cime for fewer crowds |
 | [[piz-boe]] | Summit hike on Sept 11 with optional via ferrata variant |
 
@@ -37,3 +37,4 @@ A personal knowledge base for planning a September 2026 trip to the Dolomites, I
 |------|-------------|
 | [[transportation]] | Flights, car rental, public bus to Lago di Braies, parking |
 | [[gear-and-packing]] | Shopping list and activity-specific gear requirements |
+| [[draft-2026-07-26-bus-cortina-lago-di-braies]] | Bus 445 + Bus 442 schedule, pre-booking requirement, and departure plan for Sept 14 AV1 start |

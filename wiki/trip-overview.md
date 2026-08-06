@@ -4,7 +4,7 @@
 
 **Sources**: 202609_dolomites.md
 
-**Last updated**: 2026-05-02
+**Last updated**: 2026-07-26
 
 ---
 
@@ -21,7 +21,7 @@
 The trip is split into two distinct phases:
 
 **Part 1 — Day Hikes (Sept 6–13)**
-Based out of hotels, driving between areas. Covers [[val-di-funes]], [[seceda]], [[sassolungo]], [[piz-boe]], and a [[via-ferrata]] day. Sept 9 is a planned rest day.
+Sept 6 is a pure arrival/travel day. Based out of hotels, driving between areas. Covers [[val-di-funes]] (Sept 7–8), [[seceda]] (Sept 9), [[sassolungo]], [[piz-boe]], and a [[via-ferrata]] day. A rest day is planned but no longer has a fixed date — see [[open-todos]].
 
 **Part 2 — Hut-to-Hut (Sept 14–17)**
 A 4-night partial [[alta-via-1]] traverse starting from Lago di Braies and ending at Rifugio Croda da Lago. Car is parked near the Cortina bus stop; public bus taken to the trailhead.

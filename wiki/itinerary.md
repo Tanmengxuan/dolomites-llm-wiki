@@ -4,33 +4,38 @@
 
 **Sources**: 202609_dolomites.md
 
-**Last updated**: 2026-05-02
+**Last updated**: 2026-07-26
 
 ---
 
 ## Part 1 — Day Hikes (Sept 6–13)
 
-### Sept 6 (Sun) — Arrival + Warm-up
+### Sept 6 (Sun) — Arrival
+- Travel day; no activity planned (source: 202609_dolomites.md)
+
+### Sept 7 (Mon) — Val di Funes Warm-up
 - **Area**: [[val-di-funes]]
 - **Activity**: Viewpoint Santa Maddalena — 1.5 hrs round trip
 - Easy warm-up hike to get legs moving after travel
 
-### Sept 7 (Mon) — Val di Funes Full Day
+### Sept 8 (Tue) — Val di Funes Full Day
 - **Area**: [[val-di-funes]]
 - **Options** (choose one):
   - Adolf Munkel Trail — 3.5 hrs loop
   - Tullen Summit — 6 hrs
 
-### Sept 8 (Tue) — Seceda
+### Sept 9 (Wed) — Seceda
 - **Area**: [[seceda]]
 - **Activity**: Santa Cristina → Rifugio Firenze → Seceda hike
 - **Stay**: Move to Hotel Garni Morene
 
-### Sept 9 (Wed) — Rest Day
+### Rest Day — date TBC
+- No longer fixed to Sept 9 now that Seceda occupies that date (source: 202609_dolomites.md)
 - **Options** (choose one):
   - Explore hidden villages by car (mapped route)
   - Day trip to Bolzano city
   - Cycling at Alpe di Siusi
+- See [[open-todos]] — a date still needs to be assigned
 
 ### Sept 10 (Thu) — Sassolungo
 - **Area**: [[sassolungo]]

@@ -4,31 +4,31 @@
 
 **Sources**: 202609_dolomites.md
 
-**Last updated**: 2026-05-02
+**Last updated**: 2026-07-26
 
 ---
 
-## Val di Funes (Sept 6–7)
+## Val di Funes (Sept 7–8)
 
-### Viewpoint Santa Maddalena (Sept 6 — warm-up)
+### Viewpoint Santa Maddalena (Sept 7 — warm-up)
 - Duration: 1.5 hrs round trip
-- Easy intro hike on arrival day
+- Easy intro hike; Sept 6 is now a pure arrival/travel day with no hike (source: 202609_dolomites.md)
 - AllTrails: https://www.alltrails.com/trail/italy/south-tyrol/punto-panoramico-santa-maddalena
 
-### Adolf Munkel Trail (Sept 7 — option A)
+### Adolf Munkel Trail (Sept 8 — option A)
 - Duration: 3.5 hrs loop
 - AllTrails: https://www.alltrails.com/trail/italy/south-tyrol/via-delle-odle-zanser-alm-rifugio-delle-odle-malga-dusler
 
-### Tullen Summit (Sept 7 — option B)
+### Tullen Summit (Sept 8 — option B)
 - Duration: 6 hrs
 - More demanding; full summit day
 - Guide: https://www.moonhoneytravel.com/tullen-peak-hike-odle-d-eores-dolomites/
 
-Choose one of Adolf Munkel or Tullen for Sept 7.
+Choose one of Adolf Munkel or Tullen for Sept 8.
 
 ---
 
-## Seceda (Sept 8)
+## Seceda (Sept 9)
 
 ### Santa Cristina → Rifugio Firenze → Seceda
 - AllTrails: https://www.alltrails.com/trail/italy/south-tyrol/santa-cristina-rifugio-firenze-seceda
@@ -36,7 +36,9 @@ Choose one of Adolf Munkel or Tullen for Sept 7.
 
 ---
 
-## Rest Day (Sept 9)
+## Rest Day (date TBC)
+
+No longer fixed to Sept 9 — Seceda now occupies that date and the source lists this as "TBC" (source: 202609_dolomites.md). See [[open-todos]].
 
 Three options:
 1. Explore hidden villages by car

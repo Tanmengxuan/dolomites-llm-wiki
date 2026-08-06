@@ -1,16 +1,16 @@
 # Seceda
 
-**Summary**: An iconic ridgeline in the Val Gardena area, planned for Sept 8 via a hike from Santa Cristina through Rifugio Firenze.
+**Summary**: An iconic ridgeline in the Val Gardena area, planned for Sept 9 via a hike from Santa Cristina through Rifugio Firenze.
 
 **Sources**: 202609_dolomites.md
 
-**Last updated**: 2026-05-02
+**Last updated**: 2026-07-26
 
 ---
 
 Seceda is one of the most recognisable viewpoints in the Dolomites — a long, craggy ridge above Val Gardena. It can be reached by gondola or on foot.
 
-## Planned Hike (Sept 8)
+## Planned Hike (Sept 9)
 
 - **Route**: Santa Cristina → Rifugio Firenze → Seceda
 - AllTrails: https://www.alltrails.com/trail/italy/south-tyrol/santa-cristina-rifugio-firenze-seceda

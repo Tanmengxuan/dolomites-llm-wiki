@@ -3,7 +3,7 @@ import logging
 import re
 from urllib.parse import urlparse
 
-from app.anthropic_client import get_client
+from app.anthropic_client import get_client, with_date
 from app.models import ChatResponse
 from app.skills.web_search.prompts import CITATION_SYSTEM, WEB_SEARCH_SYSTEM
 
@@ -50,7 +50,7 @@ def _run_search(prompt: str) -> str:
     response = get_client().messages.create(
         model="claude-sonnet-4-6",
         max_tokens=8192,
-        system=WEB_SEARCH_SYSTEM,
+        system=with_date(WEB_SEARCH_SYSTEM),
         tools=[_WEB_SEARCH_TOOL],
         messages=[{"role": "user", "content": prompt}],
     )

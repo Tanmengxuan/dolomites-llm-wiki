@@ -1,6 +1,6 @@
 import logging
 
-from app.agents import orchestrator, wiki_qa_agent, web_search_agent, ingest_agent
+from app.agents import orchestrator, wiki_qa_agent, web_search_agent, planner_agent, ingest_agent
 from app import session_store
 from app.models import ChatResponse
 
@@ -32,8 +32,10 @@ async def run_chat_turn(
     elif intent == "ingest":
         web_search_history = session_store.get_web_search_history(session_id)
         response = await ingest_agent.run(session_id, user_message, context, web_search_history)
+    elif intent == "planner":
+        response = await planner_agent.run(session_id, user_message, context)
     else:
         response = await wiki_qa_agent.run(session_id, user_message, context)
 
-    session_store.append_exchange(session_id, intent, user_message, response.answer)
+    session_store.append_exchange(session_id, response.intent, user_message, response.answer)
     return response

@@ -3,6 +3,9 @@ import uuid
 _store: dict[str, list[dict]] = {}
 _exchange_store: dict[str, list[dict]] = {}
 _web_search_store: dict[str, list[dict]] = {}
+# Stores in-progress planner message history when ask_user pauses the loop.
+# Value: {"messages": list, "ask_user_tool_id": str}
+_planner_state: dict[str, dict] = {}
 
 _MAX_MESSAGES = 20
 _MAX_EXCHANGES = 10
@@ -56,6 +59,18 @@ def get_context_string(session_id: str) -> str:
     return "\n".join(lines).strip()
 
 
+def save_planner_state(session_id: str, messages: list, ask_user_tool_id: str) -> None:
+    _planner_state[session_id] = {"messages": messages, "ask_user_tool_id": ask_user_tool_id}
+
+
+def has_planner_state(session_id: str) -> bool:
+    return session_id in _planner_state
+
+
+def pop_planner_state(session_id: str) -> dict | None:
+    return _planner_state.pop(session_id, None)
+
+
 def append_web_search(session_id: str, user: str, assistant: str) -> None:
     if session_id not in _web_search_store:
         _web_search_store[session_id] = []
@@ -78,6 +93,7 @@ def clear(session_id: str) -> None:
     _store.pop(session_id, None)
     _exchange_store.pop(session_id, None)
     _web_search_store.pop(session_id, None)
+    _planner_state.pop(session_id, None)
 
 
 def _trim(session_id: str) -> None:

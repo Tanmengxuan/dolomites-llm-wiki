@@ -1,4 +1,5 @@
 import os
+from datetime import date
 
 import anthropic
 from dotenv import load_dotenv
@@ -6,6 +7,13 @@ from dotenv import load_dotenv
 load_dotenv()
 
 _client: anthropic.Anthropic | None = None
+
+
+def with_date(system: str) -> str:
+    """Prepend today's date to a system prompt so agents never need to search for it."""
+    d = date.today()
+    today = f"{d.strftime('%B')} {d.day}, {d.year}"  # e.g. "September 1, 2026"
+    return f"Today's date is {today}.\n\n{system}"
 
 
 def _build_http_client():

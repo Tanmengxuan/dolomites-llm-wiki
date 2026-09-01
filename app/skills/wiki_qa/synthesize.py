@@ -1,6 +1,6 @@
 import logging
 
-from app.anthropic_client import get_client
+from app.anthropic_client import get_client, with_date
 from app import session_store, wiki_utils
 from .prompts import SYNTHESIS_SYSTEM_STATIC
 
@@ -50,7 +50,7 @@ def synthesize_answer(
     response = get_client().messages.create(
         model=MODEL,
         max_tokens=1024,
-        system=system_content,
+        system=with_date(system_content),
         messages=messages,
     )
 

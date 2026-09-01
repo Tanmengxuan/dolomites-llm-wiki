@@ -2,7 +2,7 @@ import json
 import logging
 from pathlib import Path
 
-from app.anthropic_client import get_client
+from app.anthropic_client import get_client, with_date
 from app.models import ChatResponse
 from app.skills.ingest.prompts import INGEST_SYSTEM
 
@@ -119,7 +119,7 @@ def _run_ingest(prompt: str) -> str:
         response = get_client().messages.create(
             model="claude-sonnet-4-6",
             max_tokens=8192,
-            system=INGEST_SYSTEM,
+            system=with_date(INGEST_SYSTEM),
             tools=_TOOLS,
             messages=messages,
         )

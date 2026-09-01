@@ -56,7 +56,10 @@ async def chat(req: ChatRequest):
 
     async def event_stream():
         context = session_store.get_context_string(req.session_id)
-        intent = orchestrator.classify_intent(message, context)
+        if session_store.has_planner_state(req.session_id):
+            intent = "planner"
+        else:
+            intent = orchestrator.classify_intent(message, context)
         yield f"data: {json.dumps({'type': 'intent', 'intent': intent})}\n\n"
         try:
             response = await claude_client.run_chat_turn(

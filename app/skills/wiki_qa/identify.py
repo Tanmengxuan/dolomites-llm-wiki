@@ -1,7 +1,7 @@
 import json
 import logging
 
-from app.anthropic_client import get_client
+from app.anthropic_client import get_client, with_date
 from app import wiki_utils
 from .prompts import PAGE_ID_SYSTEM
 
@@ -22,7 +22,7 @@ def identify_pages(user_message: str, known_pages: set[str], context: str = "") 
         response = get_client().messages.create(
             model=MODEL,
             max_tokens=200,
-            system=PAGE_ID_SYSTEM,
+            system=with_date(PAGE_ID_SYSTEM),
             messages=[{"role": "user", "content": prompt}],
         )
         raw = response.content[0].text.strip()

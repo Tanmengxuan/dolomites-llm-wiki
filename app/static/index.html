@@ -455,6 +455,7 @@
     wiki_qa:    'Looking up the wiki…',
     web_search: 'Searching the web…',
     ingest:     'Updating the wiki…',
+    planner:    'Planning and researching…',
   };
 
   function appendThinking() {
@@ -671,11 +672,9 @@
   async function showFileList() {
     modalTitle.textContent = 'Wiki Files';
     modalBack.style.display = 'none';
-    if (!_filesCache) {
-      modalBody.innerHTML = '<p style="color:#888;font-size:0.88rem">Loading…</p>';
-      const res = await fetch('/files');
-      _filesCache = await res.json();
-    }
+    modalBody.innerHTML = '<p style="color:#888;font-size:0.88rem">Loading…</p>';
+    const res = await fetch('/files', { cache: 'no-store' });
+    _filesCache = await res.json();
     let html = '';
     for (const [folder, files] of Object.entries(_filesCache)) {
       if (!files.length) continue;

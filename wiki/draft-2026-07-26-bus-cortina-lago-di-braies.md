@@ -57,7 +57,7 @@ Lago di Braies restricts bus access between July 1 and September 15. During this
 | ~09:10–09:30 | Board Bus 442 toward Lago di Braies |
 | ~09:40–10:00 | Arrive Lago di Braies — start hiking! |
 
-Arriving by 10:00 gives a full hiking day and comfortable buffer before [[rifugio-fodara-vedla]] check-in at 14:00.
+Arriving by 10:00 gives a full hiking day and comfortable buffer before [Rifugio Fodara Vedla](https://maps.app.goo.gl/7fbK6Nyso8B5t9pAA) check-in at 14:00.
 
 ---
 
@@ -78,6 +78,5 @@ Arriving by 10:00 gives a full hiking day and comfortable buffer before [[rifugi
 
 - [[transportation]]
 - [[alta-via-1]]
-- [[rifugio-fodara-vedla]]
 - [[accommodations]]
 - [[open-todos]]

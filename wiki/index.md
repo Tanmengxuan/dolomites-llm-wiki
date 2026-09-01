@@ -20,7 +20,7 @@ A personal knowledge base for planning a September 2026 trip to the Dolomites, I
 |------|-------------|
 | [[day-hikes]] | All day hikes in Part 1 (Sept 6–13) with trail links |
 | [[alta-via-1]] | 4-night hut-to-hut traverse (Sept 14–17), Lago di Braies → Croda da Lago |
-| [[via-ferrata]] | Via Ferrata Brigata Tridentina (Sept 12) and optional Piz Boe variant |
+| [[via-ferrata]] | Via Ferrata Brigata Tridentina (Sept 10) and optional Piz Boe variant |
 
 ## Areas
 
@@ -28,8 +28,8 @@ A personal knowledge base for planning a September 2026 trip to the Dolomites, I
 |------|-------------|
 | [[val-di-funes]] | Base for Sept 7–8; Santa Maddalena, Adolf Munkel Trail, Tullen Summit |
 | [[seceda]] | Iconic ridgeline hike on Sept 9 from Santa Cristina |
-| [[sassolungo]] | Circuit hike on Sept 10; chosen over Tre Cime for fewer crowds |
-| [[piz-boe]] | Summit hike on Sept 11 with optional via ferrata variant |
+| [[sassolungo]] | Circuit hike on Sept 11; chosen over Tre Cime for fewer crowds |
+| [[piz-boe]] | Summit hike on Sept 12 with optional via ferrata variant |
 
 ## Logistics
 

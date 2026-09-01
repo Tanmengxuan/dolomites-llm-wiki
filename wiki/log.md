@@ -71,3 +71,34 @@ Append-only record of all wiki operations.
 - `index.md` — added entry for the new bus schedule page
 
 **Notes**: Ticket prices are 2025 figures — 2026 prices not yet released. Bus 442 pre-booking opens ~mid-June 2026 at prags.bz/en. South Tyrol Guest Card (free from Cortina hotel) covers Bus 445.
+
+## 2026-09-01 — Re-ingest: 202609_dolomites.md (updated)
+
+**Source**: `raw/202609_dolomites.md` (modified — activity dates swapped, several previously-TODO accommodation details filled in, wind-down plan changed, TODO list expanded)
+
+**Pages updated**:
+- `itinerary.md`, `day-hikes.md` — Via Ferrata moved to Sept 10 (was Sept 12), Sassolungo to Sept 11 (was Sept 10), Piz Boe to Sept 12 (was Sept 11); rest day reframed as a flexible contingency usable on any of Sept 9–12 rather than a day needing its own fixed date; Seceda hike expanded with duration, weather livecam, driving directions, and gondola descent; driving directions added for Via Ferrata/Sassolungo/Piz Boe trailheads; Sept 18 changed from a Lake Garda day trip to a Cortina → Bologna drive day; Sept 19 now notes car return by 15:30
+- `via-ferrata.md`, `sassolungo.md`, `piz-boe.md`, `seceda.md` — date/heading updates matching the swap above, trailhead directions, and (for via-ferrata) an AllTrails custom map link
+- `accommodations.md` — Hotel Kabis and Hotel Garni Morene confirmed breakfast + free parking (Garni Morene cost SGD 696, paid); Scotoni Hutte, Rifugio 5 Torri, and Rifugio Croda da Lago fully filled in (meals, check-in/out, remaining payments); Bologna Airbnb parking noted as unavailable, with garage alternatives
+- `budget.md` — added resolved remaining payments for Scotoni Hutte (EUR 72), Rifugio 5 Torri (EUR 144), Rifugio Croda da Lago (EUR 96), Hotel Garni Morene cost, and Bologna garage estimate; removed now-resolved unknowns
+- `transportation.md` — parking options near Cortina bus stop expanded; car rental section now notes Milan Linate (LIN) pickup location, 15:30 return deadline, and fuel-type-confirmation todo; "Return from Alta Via 1" resolved (Cortina → Bologna → Milan airport); hotel parking table updated
+- `alta-via-1.md` — added AllTrails custom route title/link; added Day 1 lunch/weather contingency plan (Lago di Braies vs. Sennes/Fodara Vedla depending on weather and bus timing); hut payment notes updated to match resolved amounts; noted EUR cash needed for hut payments; resolved the "return to car" open item
+- `gear-and-packing.md` — removed the old buy-list (backpack/poles/crampons/knee guard) and June catch-up note, no longer present in source; replaced with via ferrata rental-shop todo, instant noodles, and EUR cash note
+- `open-todos.md` — marked Scotoni Hutte/Rifugio 5 Torri/Rifugio Croda da Lago/hotel-parking items resolved; removed "assign rest day date" (superseded by the flexible-contingency framing) and the June catch-up item (no longer in source); added new todos: Bus 442 booking link, EUR cash exchange, LIN car rental shop directions, car fuel type check, Seceda lift passes, via ferrata rental shop, instant noodles
+- `trip-overview.md` — Part 1 summary updated with new activity dates; wind-down summary updated to reflect the Bologna drive plan
+- `index.md` — updated via-ferrata/sassolungo/piz-boe date references
+
+**Notes**: The rest day is now explicitly framed in the source as a flexible contingency (usable on any of Sept 9–12), not a day requiring its own assigned date — this resolves a previously open item rather than deferring it.
+
+## 2026-09-01 — Add Google Maps URLs from 202609_dolomites.md into existing pages
+
+**Source**: `raw/202609_dolomites.md` (no new changes — filling in links that were previously summarized as plain durations without their URLs)
+
+**Pages updated**:
+- `accommodations.md` — added map pins for all 4 rifugios, the Bologna Airbnb, and both suggested parking garages
+- `itinerary.md`, `day-hikes.md` — added the actual drive links (not just durations) for Hotel Kabis→Santa Cristina, Garni Morene→Via Ferrata trailhead, Mozart Nesthouse→Sassolungo trailhead, Mozart Nesthouse→Passo Pordoi, the hidden-villages rest-day route, Cortina carpark→Bologna, and Bologna→Milan airport; also fixed stale Sept 15/17 hut placeholders left over from the last ingest
+- `seceda.md`, `via-ferrata.md`, `sassolungo.md`, `piz-boe.md` — added their respective trailhead drive links
+- `alta-via-1.md` — replaced broken `[[rifugio-*]]` wiki-links (pages that don't exist) with the actual map pins in the route table and lunch-contingency note; added the Cortina→Bologna drive link
+- `draft-2026-07-26-bus-cortina-lago-di-braies.md` — same broken-link fix for Rifugio Fodara Vedla
+
+**Notes**: No dedicated "maps" page was created — links were folded into the existing day/area/accommodation pages they belong to, since a standalone link list would just duplicate context already on each page.

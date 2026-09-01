@@ -4,7 +4,7 @@
 
 **Sources**: 202609_dolomites.md
 
-**Last updated**: 2026-07-26
+**Last updated**: 2026-09-01
 
 ---
 
@@ -26,32 +26,37 @@
 
 ### Sept 9 (Wed) — Seceda
 - **Area**: [[seceda]]
-- **Activity**: Santa Cristina → Rifugio Firenze → Seceda hike
+- **Activity**: Santa Cristina → Rifugio Firenze → Seceda hike (4 hrs) (source: 202609_dolomites.md)
+- Check the [Seceda livecam](https://www.valgardena.it/en/webcams/seceda-live/) before heading out
+- Drive: [Hotel Kabis → Santa Cristina](https://www.google.com/maps/dir/Hotel+Kabis,+Peterweg,+14,+39040+San+Pietro+BZ,+Italy/Parkplatz,+Ruacia+Str.,+39048+S%C3%ABlva,+Autonome+Provinz+Bozen+-+S%C3%BCdtirol,+Italy/@46.6066847,11.5463788,12z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x477811b8554913cf:0x436feaee9d87edae!2m2!1d11.6800749!2d46.6423316!1m5!1m1!1s0x477814994b68e629:0xe45cdce15252f3b1!2m2!1d11.7288925!2d46.556967!3e0), ~1 hr
+- Descent: Chairlift Fermeda then Col Raiser Gondola back to Santa Cristina — passes can be bought on the day (source: 202609_dolomites.md)
 - **Stay**: Move to Hotel Garni Morene
 
-### Rest Day — date TBC
-- No longer fixed to Sept 9 now that Seceda occupies that date (source: 202609_dolomites.md)
-- **Options** (choose one):
-  - Explore hidden villages by car (mapped route)
-  - Day trip to Bolzano city
-  - Cycling at Alpe di Siusi
-- See [[open-todos]] — a date still needs to be assigned
+### Sept 10 (Thu) — Via Ferrata
+- **Activity**: [[via-ferrata]] Brigata Tridentina al Pisciadu
+- Famous for its suspension bridge; Rifugio at the top for a meal; good summit views
+- Should be done before [[sassolungo]] as it is closer to the Seceda area (source: 202609_dolomites.md)
+- Drive: [Hotel Garni Morene → trailhead](https://www.google.com/maps/dir/Garni+Morene,+Streda+Puez,+49,+39048+Selva+di+Val+Gardena+BZ,+Italy/Parking+M%C3%ABisules,+Passo+Gardena,+39033+S%C3%ABlva,+Autonome+Provinz+Bozen+-+S%C3%BCdtirol,+Italy/@46.5455194,11.7594592,14z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x477814e5364f049d:0xb57aae3f3457296e!2m2!1d11.7610673!2d46.5587348!1m5!1m1!1s0x47781520be5eabcf:0xa54d0e218aa93ff7!2m2!1d11.8092182!2d46.5499317!3e0) (Passo Gardena parking), ~30 mins
 
-### Sept 10 (Thu) — Sassolungo
+### Sept 11 (Fri) — Sassolungo
 - **Area**: [[sassolungo]]
 - **Activity**: Giro del Gruppo del Sassolungo circuit
 - Less crowded than Tre Cime; more huts along the circuit; comparable views (source: 202609_dolomites.md)
+- **Stay**: Move to Garni B&B Mozart Nesthouse
+- Drive: [Garni B&B Mozart Nesthouse → trailhead](https://www.google.com/maps/dir/Mozart+NestHouse,+Via+Roma,+27,+38032+Canazei+TN,+Italy/Parcheggio,+39048+Selva+di+Val+Gardena+BZ,+Italy/@46.4908723,11.7536313,14z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x47786a69bb6f5c5d:0x1c4ff5f5c4c83200!2m2!1d11.7659692!2d46.476781!1m5!1m1!1s0x47786bfc29fd13a7:0xd1dd03c51b3eb4e4!2m2!1d11.7576674!2d46.5093389!3e0), ~30 mins
 
-### Sept 11 (Fri) — Piz Boe
+### Sept 12 (Sat) — Piz Boe
 - **Area**: [[piz-boe]]
 - **Activity**: Piz Boe summit hike
+- Drive: [Garni B&B Mozart Nesthouse → Passo Pordoi](https://www.google.com/maps/dir/Mozart+NestHouse,+Via+Roma,+27,+38032+Canazei+TN,+Italy/Parking+Passo+Pordoi,+38032+Canazei+TN,+Italy/@46.4841513,11.7778886,15z/data=!3m1!4b1!4m14!4m13!1m5!1m1!1s0x47786a69bb6f5c5d:0x1c4ff5f5c4c83200!2m2!1d11.7659692!2d46.476781!1m5!1m1!1s0x477841e45c1e738b:0xeb51b5d8851f7ca7!2m2!1d11.8104543!2d46.488107!3e0), ~30 mins, then cable car to Rifugio Maria
 - Optional add-on: Ferrata Piazzetta (difficult via ferrata variant)
-- **Stay**: Move to Garni B&B Mozart Nesthouse
 
-### Sept 12 (Sat) — Via Ferrata
-- **Activity**: [[via-ferrata]] Brigata Tridentina al Pisciadu
-- Famous for its suspension bridge; Rifugio at the top for a meal; good summit views
-- Should be done before Sassolungo as it is closer to the Seceda area (source: 202609_dolomites.md)
+### Rest Day — flexible, Sept 9–12
+- Not a separately scheduled day: a contingency to swap in on any of Sept 9–12 in case of bad weather or exhaustion (source: 202609_dolomites.md)
+- **Options** (choose one):
+  - [Explore hidden villages by car](https://www.google.com/maps/dir/Santa+Cristina+Valgardena,+39047+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy/Gardena+Pass,+39033+Corvara,+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy/Calfosch,+39033+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy/Via+S.+Senese,+39030+San+Genesio+BZ,+Italy/Luch+De+Survisc+Agriturismo,+Cians,+13,+39030+La+Valle+BZ,+Italy/Str.+Picolin,+71,+39030+Marebbe+BZ,+Italy/W%C3%BCrzjoch,+39030+San+Martin+de+Tor,+Autonomous+Province+of+Bolzano+%E2%80%93+South+Tyrol,+Italy) (mapped route)
+  - Day trip to Bolzano city
+  - Cycling at Alpe di Siusi
 
 ### Sept 13 (Sun) — Either/Or
 - **Stay**: Move to Hotel Menardi (Cortina d'Ampezzo area)
@@ -66,27 +71,28 @@ See [[alta-via-1]] for full details on the route.
 
 ### Sept 14 (Mon) — Lago di Braies → Rifugio Fodara Vedla
 - Park car near Cortina bus stop; take public bus to Lago di Braies
-- **Stay**: [[rifugio-fodara-vedla]] (private room, half board, EUR 196 remaining)
+- **Stay**: [Rifugio Fodara Vedla](https://maps.app.goo.gl/7fbK6Nyso8B5t9pAA) — see [[accommodations]] (private room, half board, EUR 196 remaining)
 
 ### Sept 15 (Tue) — Rifugio Fodara Vedla → Scotoni Hutte
-- **Stay**: [[scotoni-hutte]] (shared room, meals TBD, payment TBD)
+- **Stay**: [Scotoni Hutte](https://maps.app.goo.gl/sa6diPPM22C3EMxLA) — see [[accommodations]] (shared room, half board, EUR 72 remaining)
 
 ### Sept 16 (Wed) — Scotoni Hutte → Rifugio 5 Torri
-- **Stay**: [[rifugio-5-torri]] (shared facilities, half board, dinner 19:00, breakfast 07:30)
+- **Stay**: [Rifugio 5 Torri](https://maps.app.goo.gl/b9faDxsuYbEETMwc9) — see [[accommodations]] (private room, shared facilities, half board, dinner 19:00, breakfast 07:30, EUR 144 remaining)
 
 ### Sept 17 (Thu) — Rifugio 5 Torri → Rifugio Croda da Lago
-- **Stay**: [[rifugio-croda-da-lago]] (check-in/meals TBD)
+- **Stay**: [Rifugio Croda da Lago](https://maps.app.goo.gl/ez37Zk3Fa2YCS7AeA) — see [[accommodations]] (shared room, half board, EUR 96 remaining)
 
 ---
 
 ## Wind-down (Sept 18–19)
 
-### Sept 18 (Fri) — Lake Garda
-- Day trip to Lake Garda
-- Suggested spots: Punta Larici or Monte Baldo viewpoints
+### Sept 18 (Fri) — Rifugio Croda da Lago → Cortina → Bologna
+- Drive from Cortina to Bologna, ~4 hrs (source: 202609_dolomites.md)
 - **Stay**: Ugo Bassi & Towers apartment, Bologna (Airbnb, check-in from 15:00)
 
 ### Sept 19 (Sat) — Departure
+- Drive Bologna Airbnb → Milan airport, ~2 hr 30 min (source: 202609_dolomites.md)
+- Car must be returned by 15:30
 
 ---
 

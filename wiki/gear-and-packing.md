@@ -1,33 +1,29 @@
 # Gear and Packing
 
-**Summary**: Gear that still needs to be purchased before the trip, plus notes on equipment required for specific activities.
+**Summary**: Gear still needed before the trip — mostly via ferrata equipment to rent — plus notes on requirements for specific activities.
 
 **Sources**: 202609_dolomites.md
 
-**Last updated**: 2026-05-02
+**Last updated**: 2026-09-01
 
 ---
 
-## Shopping List (from source)
+## Via Ferrata Equipment (Sept 10)
 
-Items explicitly listed as needing to be bought:
+[[via-ferrata]] activities require a via ferrata set (harness + lanyard) and helmet. The plan is to **rent** this gear rather than buy it — finding a rental/harness shop is an open todo (source: 202609_dolomites.md). See [[open-todos]].
 
-- Hiking backpack
-- Hiking poles
-- Crampons
-- Knee guard
+## Other To-Buy Items
+
+- Instant noodles (source: 202609_dolomites.md)
+
+## Cash
+
+Bring EUR cash to pay for hut stays during the [[alta-via-1]] section (source: 202609_dolomites.md).
 
 ## Activity-Specific Requirements
 
-### Via Ferrata (Sept 12)
-[[via-ferrata]] activities require a via ferrata set (harness + lanyard) and helmet. These are **not listed** in the source's shopping list — this may be an omission. Needs confirmation before the trip.
-
 ### Hut-to-Hut ([[alta-via-1]], Sept 14–17)
-Multi-night hut stay with half-board meals at some huts. Pack light — shared facilities at some rifugios.
-
-## Catch-up Meeting
-
-A group catch-up is planned for June 2026 (before the trip) — may be a good time to coordinate gear purchases and confirm remaining logistics.
+Multi-night hut stay with half-board meals at some huts. Pack light — shared facilities at some rifugios. Cash-based payments — see above.
 
 ## Related pages
 

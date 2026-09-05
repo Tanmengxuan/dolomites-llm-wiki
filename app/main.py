@@ -62,9 +62,23 @@ async def chat(req: ChatRequest):
             intent = orchestrator.classify_intent(message, context)
         yield f"data: {json.dumps({'type': 'intent', 'intent': intent})}\n\n"
         try:
-            response = await claude_client.run_chat_turn(
-                req.session_id, message, intent=intent, context=context
+            task = asyncio.create_task(
+                claude_client.run_chat_turn(req.session_id, message, intent=intent, context=context)
             )
+            # Send keepalive comments every 15 s so proxies don't drop the SSE connection
+            # during long-running agents (web search can take 60-120 s).
+            # SSE comment lines (": ...") are silently ignored by the browser EventSource.
+            _MAX_WAIT = 420  # Hard cap on waiting time for agent to complete
+            _elapsed = 0
+            while not task.done():
+                await asyncio.sleep(15)
+                _elapsed += 15
+                if not task.done():
+                    if _elapsed >= _MAX_WAIT:
+                        task.cancel()
+                        raise TimeoutError(f"Agent did not complete within {_MAX_WAIT // 60} minutes.")
+                    yield ": keepalive\n\n"
+            response = task.result()
             yield f"data: {json.dumps({'type': 'response', **response.model_dump()})}\n\n"
         except Exception as e:
             logger.exception("Chat error")

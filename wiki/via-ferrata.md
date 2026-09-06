@@ -2,9 +2,9 @@
 
 **Summary**: Via ferrata activities planned for the trip — primarily the Brigata Tridentina on Sept 10, with an optional harder route on Piz Boe on Sept 12.
 
-**Sources**: 202609_dolomites.md
+**Sources**: 202609_dolomites.md, raw/trip-checklist.md
 
-**Last updated**: 2026-09-01
+**Last updated**: 2026-09-06
 
 ---
 
@@ -20,6 +20,13 @@
 - Famous for its **suspension bridge**
 - Rifugio at the summit for a meal break
 - Good summit views
+
+### Operational Notes (source: trip-checklist.md)
+- Grade C, ~400 m of cable, ~4.5–6 hr loop starting from the parking below Passo Gardena
+- Start by 08:00
+- Only bail-out is before the suspension bridge — after it, the route must be finished
+- **Zero storm tolerance**: steel cable + lightning = never attempt. If thunder threatens early, swap to Gran Cir (2.5 hr, easy) or a valley walk instead
+- First-timers can add a guide: dolomagic.it, catores.com, altabadiaguides.com
 
 ### Planning note
 The source notes this should be done before [[sassolungo]] (Sassolungo is Sept 11) because the Brigata Tridentina is geographically closer to the [[seceda]] area (source: 202609_dolomites.md). This ordering is already reflected in the [[itinerary]].
@@ -42,7 +49,7 @@ Via ferrata requires specific safety gear beyond normal hiking equipment. Needed
 - Helmet
 - Gloves (recommended)
 
-The plan is to **rent** this equipment rather than buy it — finding a rental/harness shop is an open todo (source: 202609_dolomites.md). See [[open-todos]].
+The plan is to **rent** this equipment rather than buy it. **Resolved**: Intersport Val Gardena, full kit €27/day — pickup at Selva (Nives/Ciampinoi) or Santa Cristina (Dosses). Alternatives: Sport Bruno Riffeser (Selva), or Corvara/Colfosco shops, €20–30/day (source: trip-checklist.md). See [[gear-and-packing]] and [[open-todos]].
 
 ---
 

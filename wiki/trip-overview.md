@@ -2,9 +2,9 @@
 
 **Summary**: A 14-day trip to the Dolomites, Italy for 2 people in September 2026, combining day hikes from hotel bases and a multi-day hut-to-hut traverse.
 
-**Sources**: 202609_dolomites.md
+**Sources**: 202609_dolomites.md, raw/trip-checklist.md
 
-**Last updated**: 2026-09-01
+**Last updated**: 2026-09-06
 
 ---
 
@@ -31,7 +31,7 @@ Drive from Cortina to Bologna on Sept 18, then departure on Sept 19 via Milan ai
 
 ## Open Items
 
-Several logistics are still unresolved — see [[open-todos]] for the full list.
+Several logistics are still unresolved — see [[open-todos]] for the full list. A pre-trip master checklist (source: raw/trip-checklist.md) was compiled Sept 5, 2026 — the day before departure — and lists urgent same-day items (IDP, web check-in, insurance, host messages) that must happen before the Sept 6 22:45 flight; see [[travel-documents]] and [[insurance-and-safety]].
 
 ## Related pages
 
@@ -41,5 +41,7 @@ Several logistics are still unresolved — see [[open-todos]] for the full list.
 - [[day-hikes]]
 - [[transportation]]
 - [[gear-and-packing]]
+- [[travel-documents]]
+- [[insurance-and-safety]]
 - [[budget]]
 - [[open-todos]]

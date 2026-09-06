@@ -2,9 +2,9 @@
 
 **Summary**: A prominent massif in the Val Gardena area; the circuit hike around it is planned for Sept 11 as an alternative to the more crowded Tre Cime route.
 
-**Sources**: 202609_dolomites.md
+**Sources**: 202609_dolomites.md, raw/trip-checklist.md
 
-**Last updated**: 2026-09-01
+**Last updated**: 2026-09-06
 
 ---
 
@@ -19,6 +19,10 @@ Sassolungo (Langkofel in German) is a striking group of peaks at the head of Val
 ## Why Sassolungo over Tre Cime?
 
 The source notes that the Sassolungo circuit was chosen over the Tre Cime circuit because it is less crowded, has more huts along the route, and maintains comparable views (source: 202609_dolomites.md).
+
+## Operational Notes
+
+Long day (~17 km) — the earliest start of the week. The Forcella Sassolungo "coffin" gondola is a mid-circuit bail-out option if needed (source: trip-checklist.md).
 
 ## Related pages
 

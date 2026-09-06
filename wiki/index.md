@@ -11,8 +11,10 @@ A personal knowledge base for planning a September 2026 trip to the Dolomites, I
 | [[trip-overview]] | Dates, group size, trip structure (day hikes → hut-to-hut → wind-down) |
 | [[itinerary]] | Day-by-day plan for all 14 days |
 | [[accommodations]] | All 9 stays — hotels, rifugios, and Airbnb with check-in/meal details |
-| [[budget]] | Known costs and expense sharing via Splid |
-| [[open-todos]] | Unresolved logistics, pending decisions, and items still to confirm |
+| [[budget]] | Known costs, money plan, and expense sharing via Splid |
+| [[open-todos]] | Unresolved logistics, pending decisions, and items still to confirm — includes urgent day-of-departure items |
+| [[travel-documents]] | Passport, IDP, entry rules (ETIAS/EES), MFA registration, connectivity setup |
+| [[insurance-and-safety]] | Travel insurance requirements, Aiut Alpin rescue cover, daily storm rule, emergency contacts |
 
 ## Activities
 

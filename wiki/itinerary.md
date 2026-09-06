@@ -4,19 +4,21 @@
 
 **Sources**: 202609_dolomites.md
 
-**Last updated**: 2026-09-01
+**Last updated**: 2026-09-06
 
 ---
 
 ## Part 1 — Day Hikes (Sept 6–13)
 
 ### Sept 6 (Sun) — Arrival
-- Travel day; no activity planned (source: 202609_dolomites.md)
+- Overnight flight departs SIN 22:45 (source: 202609_dolomites.md) — see [[transportation]] for full flight details
 
-### Sept 7 (Mon) — Val di Funes Warm-up
+### Sept 7 (Mon) — LIN Arrival → Val di Funes Warm-up
+- Land Milan Linate 09:10, pick up rental car, drive to **Rovereto for lunch** (~2 hr drive) at [Trattoria Bella Vista](https://maps.app.goo.gl/7LkAd4r7ZHcrtxwG6), then continue to Val di Funes with a supermarket stop (source: 202609_dolomites.md)
 - **Area**: [[val-di-funes]]
 - **Activity**: Viewpoint Santa Maddalena — 1.5 hrs round trip
 - Easy warm-up hike to get legs moving after travel
+- Dinner options: [Pitzock](https://maps.app.goo.gl/Nc6KkRvqmgjBq5zMA) (book ahead) or [Waldschenke](https://maps.app.goo.gl/kbvnNctUdSi3dByc9)
 
 ### Sept 8 (Tue) — Val di Funes Full Day
 - **Area**: [[val-di-funes]]
@@ -59,9 +61,10 @@
   - Cycling at Alpe di Siusi
 
 ### Sept 13 (Sun) — Either/Or
-- **Stay**: Move to Hotel Menardi (Cortina d'Ampezzo area)
-- **Option A**: Marmolada — highest peak in the Dolomites
+- **Stay**: Move to Hotel Menardi (Cortina d'Ampezzo area); laundry Sun afternoon so trek clothes are dry by Mon 07:00 (source: trip-checklist.md)
+- **Option A**: Marmolada — highest peak in the Dolomites. Cable car verified running to 27 Sep 2026; first ascent 09:00, last descent 16:30, return €38–40 pp; terrace needs no special gear, just warm layers + cat 3/4 sunglasses (source: trip-checklist.md)
 - **Option B**: Rest day, explore Cortina d'Ampezzo, prepare gear for Alta Via 1
+- Decide between the two based on the Saturday-evening forecast (source: trip-checklist.md)
 
 ---
 
@@ -70,7 +73,8 @@
 See [[alta-via-1]] for full details on the route.
 
 ### Sept 14 (Mon) — Lago di Braies → Rifugio Fodara Vedla
-- Park car near Cortina bus stop; take public bus to Lago di Braies
+- Repack to hut mode Sunday night: one 35–45 L pack each, ≤6–8 kg; leave duffels/Bologna clothes locked in the car (source: trip-checklist.md)
+- Park car near Cortina bus stop; take public bus to Lago di Braies — see [[transportation]] and [[alta-via-1]] for bus times
 - **Stay**: [Rifugio Fodara Vedla](https://maps.app.goo.gl/7fbK6Nyso8B5t9pAA) — see [[accommodations]] (private room, half board, EUR 196 remaining)
 
 ### Sept 15 (Tue) — Rifugio Fodara Vedla → Scotoni Hutte
@@ -88,11 +92,12 @@ See [[alta-via-1]] for full details on the route.
 
 ### Sept 18 (Fri) — Rifugio Croda da Lago → Cortina → Bologna
 - Drive from Cortina to Bologna, ~4 hrs (source: 202609_dolomites.md)
-- **Stay**: Ugo Bassi & Towers apartment, Bologna (Airbnb, check-in from 15:00)
+- **Stay**: Ugo Bassi & Towers apartment, Bologna (Airbnb, check-in from 15:00) — do not navigate to Via Ugo Bassi itself (it sits in Bologna's 24/7 "Zona T"); drive to the garage instead — see [[accommodations]] and [[transportation]]
 
 ### Sept 19 (Sat) — Departure
-- Drive Bologna Airbnb → Milan airport, ~2 hr 30 min (source: 202609_dolomites.md)
+- Drive Bologna Airbnb → Milan airport, ~2 hr 30 min (source: 202609_dolomites.md); refuel near Linate before returning the car
 - Car must be returned by 15:30
+- Any VAT refund / EES exit biometrics happen at Frankfurt (FRA) during the return transfer, not at Linate — see [[transportation]]
 
 ---
 

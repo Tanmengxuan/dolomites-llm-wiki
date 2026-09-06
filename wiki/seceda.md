@@ -2,9 +2,9 @@
 
 **Summary**: An iconic ridgeline in the Val Gardena area, planned for Sept 9 via a hike from Santa Cristina through Rifugio Firenze.
 
-**Sources**: 202609_dolomites.md
+**Sources**: 202609_dolomites.md, raw/trip-checklist.md
 
-**Last updated**: 2026-09-01
+**Last updated**: 2026-09-06
 
 ---
 
@@ -21,6 +21,7 @@ Seceda is one of the most recognisable viewpoints in the Dolomites — a long, c
 ### Descent
 - Chairlift Fermeda, then Col Raiser Gondola, back to Santa Cristina
 - Lift passes can be bought on the day itself (source: 202609_dolomites.md) — see [[open-todos]]
+- **2026 update**: the Ortisei-side lifts use online time-slot pre-booking; buy the "Seceda Premium" combo (incl. Fermeda) at the station, ~€45 pp return-equivalent. Dolomiti Supersummer passes are **not valid** on these lifts. Last rides ~17:00–17:30 — be at Fermeda by 16:30 (source: trip-checklist.md)
 
 ## Planning note
 

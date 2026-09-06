@@ -102,3 +102,29 @@ Append-only record of all wiki operations.
 - `draft-2026-07-26-bus-cortina-lago-di-braies.md` — same broken-link fix for Rifugio Fodara Vedla
 
 **Notes**: No dedicated "maps" page was created — links were folded into the existing day/area/accommodation pages they belong to, since a standalone link list would just duplicate context already on each page.
+
+## 2026-09-06 — Re-ingest: 202609_dolomites.md (updated) + new source raw/trip-checklist.md
+
+**Sources**:
+- `raw/202609_dolomites.md` (modified — flight/car-rental image placeholders replaced with text; new Sept 7 Rovereto lunch stop and Val di Funes dinner restaurants added; "Get instant noodles" removed from TODO list)
+- `raw/trip-checklist.md` (new source — a pre-trip master checklist compiled Sept 5, 2026, the day before departure; covers flights, car rental, entry rules, insurance, packing, day-by-day operational notes, money plan, and emergency contacts)
+
+**Pages created**:
+- `travel-documents.md` — passport/IDP requirements, ETIAS/EES entry rules, MFA eRegister, Noleggiare web check-in, connectivity (eSIMs, offline maps)
+- `insurance-and-safety.md` — travel insurance requirements, Aiut Alpin Dolomites rescue membership, daily storm-avoidance rhythm, health & safety summary, emergency contacts card
+
+**Pages updated**:
+- `val-di-funes.md`, `itinerary.md`, `day-hikes.md` — added the Sept 7 Rovereto lunch stop (Trattoria Bella Vista) and supermarket run, plus Val di Funes dinner restaurants (Pitzock, Waldschenke)
+- `itinerary.md` — Sept 13 Marmolada option now has confirmed cable car details; Sept 14 notes the hut-mode repack; Sept 18–19 note the Bologna ZTL routing and FRA-based VAT refund/EES exit
+- `day-hikes.md`, `seceda.md`, `via-ferrata.md`, `sassolungo.md`, `piz-boe.md` — added operational detail from the checklist: Seceda lift pre-booking and last-ride times, via ferrata grade/timing/storm protocol and resolved rental shop, Sassolungo bail-out gondola, Piz Boe cable car hours/summit temps, Marmolada cable car schedule (resolving the previous "needs research" note)
+- `transportation.md` — flights and car rental sections now have full text detail (previously embedded as images and unavailable); added driving rules (IDP, tolls, low beams, speed cameras), updated Cortina parking (old free lot closed for Olympics works, new Pontechiesa/Lungo Boite options), new Entry Rules section (ETIAS/EES/VAT refund), Bologna ZTL note
+- `transportation.md`, `alta-via-1.md` — bus times for Sept 14 updated to the checklist's more precise figures (445 dep 08:05→Toblach 08:50, 442 dep 09:01→Braies 09:29); explicit contradiction noted against the earlier `draft-2026-07-26-bus-cortina-lago-di-braies.md` draft (08:20/~09:40–10:00), with the checklist treated as authoritative since it states its times were verified against the official 2026 timetable
+- `alta-via-1.md` — added repacking-to-hut-mode note, daily trek notes (hut etiquette, water, waymarking/Tabacco maps, thunderstorm protocol), updated Cortina parking guidance
+- `accommodations.md` — Hotel Menardi: added note to ask about holding the car, laundry timing; Bologna Airbnb: added reservation ref, ZTL/garage plate-registration requirement, host-message reminder
+- `budget.md` — added money plan table (cash target, cost breakdown, total spend estimate), insurance and Aiut Alpin Dolomites line items, car rental/ferrata-rental costs
+- `gear-and-packing.md` — resolved via ferrata rental shop (Intersport Val Gardena, €27/day); added full packing list (clothing, hiking & safety, electronics/connectivity) from the checklist; removed "instant noodles" (no longer in source)
+- `open-todos.md` — added a "Urgent — before wheels-up" section for same-day departure-day items; resolved via ferrata rental shop and LIN-to-rental-shop todos; updated bus-booking link and Cortina parking todo; removed instant noodles
+- `trip-overview.md` — noted the pre-trip checklist and its day-of-departure urgency
+- `index.md` — added entries for the two new pages
+
+**Notes**: This ingest lands the day of departure (today's date matches the flight's departure day in the source). The bus-time discrepancy between the two sources is called out explicitly per the wiki's citation rules rather than silently overwritten.

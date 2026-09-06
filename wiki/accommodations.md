@@ -2,9 +2,9 @@
 
 **Summary**: All 9 stays for the September 2026 trip, from hotels in Part 1 to mountain rifugios during the hut-to-hut section.
 
-**Sources**: 202609_dolomites.md
+**Sources**: 202609_dolomites.md, raw/trip-checklist.md
 
-**Last updated**: 2026-09-01
+**Last updated**: 2026-09-06
 
 ---
 
@@ -30,8 +30,8 @@
 ### Hotel Menardi
 - **Dates**: Sept 13–14 (Sun–Mon)
 - **Cost**: SGD 345
-- **Parking**: Free
-- **Other**: Laundry services available
+- **Parking**: Free — first ask if they can hold the car during the Sept 14–18 hut section (source: trip-checklist.md)
+- **Other**: Laundry services available — plan to wash Sun afternoon so trek clothes are dry by Mon 07:00 (source: trip-checklist.md)
 - Located in Cortina d'Ampezzo area — serves as staging point before [[alta-via-1]]
 
 ---
@@ -87,14 +87,17 @@
 
 ### Ugo Bassi & Towers Apartment (Bologna)
 - **Map**: https://www.google.com/maps/search/?api=1&query=44.4953802%2C11.3401873
+- **Reservation ref**: HM9Q2NNB2W
 - **Dates**: Sept 18–19 (Fri–Sat)
 - **Type**: Airbnb
 - **Room**: 1 double bed + 1 sofa bed; air conditioning
-- **Check-in**: From 15:00
+- **Check-in**: From 15:00 — complete the host's ID verification beforehand
 - **Check-out**: By 11:00
 - **Parking**: No free parking. Host-suggested private garages (car key must be left with the garage):
-  - [Garage San Felice](https://maps.app.goo.gl/iV2AWa3S9qvMRXk17) — ~40 EUR/night (per review)
+  - [Garage San Felice](https://maps.app.goo.gl/iV2AWa3S9qvMRXk17) — ~€25–40/24 hr (Via San Felice 28/B; open Sat 08:00–20:00, fits a ~12:45 Sat retrieval) — **preferred option**
   - [Garage Piazza Maggiore](https://maps.app.goo.gl/iQBABLJi5JhpbuWF9)
+- ⚠️ **Bologna ZTL (source: trip-checklist.md)**: Via Ugo Bassi itself sits inside the 24/7 "Zona T" — no driving there, ever, without a special permit, and Zona T is closed to all vehicles Sat 08:00–Sun 22:00. Do not drive to the apartment; drive to the garage instead. The garage must register the car's plate with the Comune **≥24 hrs before arrival** for legal ZTL guest access — message the host the night before departure to confirm this and the driving route. See [[transportation]]
+- Message the host the evening before arrival to confirm check-in and garage/plate registration (source: trip-checklist.md)
 
 ---
 

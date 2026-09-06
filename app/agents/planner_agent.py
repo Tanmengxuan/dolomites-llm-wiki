@@ -65,10 +65,11 @@ def _wiki_search(query: str, session_id: str, context: str) -> str:
     return answer
 
 
-def _run_planner(session_id: str, user_message: str, context: str) -> tuple[str, bool]:
+def _run_planner(session_id: str, user_message: str, context: str) -> tuple[str, bool, list[dict]]:
     """
-    Returns (answer, is_question).
+    Returns (answer, is_question, tool_calls).
     is_question=True means the answer is a clarifying question for the user.
+    tool_calls is a list of {"tool": name, "query": input} dicts for UI display.
     """
     saved = session_store.pop_planner_state(session_id)
     if saved:
@@ -84,6 +85,7 @@ def _run_planner(session_id: str, user_message: str, context: str) -> tuple[str,
             messages = [{"role": "user", "content": f"Conversation context:\n{context}\n\nCurrent question: {user_message}"}]
 
     text_parts: list[str] = []
+    tool_call_log: list[dict] = []
 
     for turn in range(10):
         response = get_client().messages.create(
@@ -122,17 +124,20 @@ def _run_planner(session_id: str, user_message: str, context: str) -> tuple[str,
                     logger.error("[planner] ask_user called with no 'question' field")
                     question = "I need more information to answer that. Could you tell me more about what you're looking for?"
                 logger.info("[planner] ask_user → %s", question)
-                # Persist the in-progress message history so the loop can resume
-                # once the user answers. `messages` already has the assistant turn
-                # with the ask_user tool call appended above.
+                tool_call_log.append({"tool": "ask_user", "query": question})
                 session_store.save_planner_state(session_id, messages, block.id)
-                return question, True
+                return question, True, tool_call_log
 
             elif block.name == "wiki_search":
-                result = _wiki_search(block.input["query"], session_id, context)
+                query = block.input["query"]
+                tool_call_log.append({"tool": "wiki_search", "query": query})
+                result = _wiki_search(query, session_id, context)
 
             elif block.name == "web_search":
-                result = _run_search(block.input["query"])
+                query = block.input["query"]
+                tool_call_log.append({"tool": "web_search", "query": query})
+                result = _run_search(query)
+                session_store.append_web_search(session_id, query, result)
 
             else:
                 result = f"Unknown tool: {block.name}"
@@ -147,7 +152,7 @@ def _run_planner(session_id: str, user_message: str, context: str) -> tuple[str,
         if tool_results:
             messages.append({"role": "user", "content": tool_results})
 
-    return "\n\n".join(text_parts).strip(), False
+    return "\n\n".join(text_parts).strip(), False, tool_call_log
 
 
 async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
@@ -156,8 +161,9 @@ async def run(session_id: str, user_message: str, context: str = "") -> ChatResp
 
     answer = ""
     is_question = False
+    tool_calls: list[dict] = []
     try:
-        answer, is_question = await asyncio.to_thread(
+        answer, is_question, tool_calls = await asyncio.to_thread(
             _run_planner, session_id, user_message, context
         )
     except Exception:
@@ -166,11 +172,12 @@ async def run(session_id: str, user_message: str, context: str = "") -> ChatResp
     if not answer:
         answer = "I couldn't find enough information to answer that. Could you rephrase?"
 
-    logger.info("[planner] Done (is_question=%s)", is_question)
+    logger.info("[planner] Done (is_question=%s, tool_calls=%d)", is_question, len(tool_calls))
     return ChatResponse(
         answer=answer,
         sources=[],
         offer_save=False,
         session_id=session_id,
         intent="planner",
+        tool_calls=tool_calls,
     )

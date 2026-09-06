@@ -71,6 +71,26 @@
     border-radius: 4px 16px 16px 16px;
     font-size: 0.95rem;
   }
+  .planner-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e8e8e0;
+  }
+  .planner-step {
+    font-size: 0.78rem;
+    color: #555;
+    font-family: monospace;
+    background: #f5f5f0;
+    border-left: 3px solid #b8d8b8;
+    padding: 3px 8px;
+    border-radius: 0 4px 4px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
   .msg.assistant .sources {
     display: flex;
     flex-wrap: wrap;
@@ -468,9 +488,22 @@
     return div;
   }
 
-  function appendAssistant(answer, sources, offerSave) {
+  function appendAssistant(answer, sources, offerSave, toolCalls) {
     const div = document.createElement('div');
     div.className = 'msg assistant';
+
+    if (toolCalls && toolCalls.length) {
+      const steps = document.createElement('div');
+      steps.className = 'planner-steps';
+      const TOOL_ICON = { wiki_search: '📖', web_search: '🌐', ask_user: '❓' };
+      toolCalls.forEach(tc => {
+        const chip = document.createElement('div');
+        chip.className = 'planner-step';
+        chip.textContent = `${TOOL_ICON[tc.tool] || '🔧'} ${tc.tool}: ${tc.query}`;
+        steps.appendChild(chip);
+      });
+      div.appendChild(steps);
+    }
 
     const body = document.createElement('div');
     body.className = 'md-body';
@@ -626,7 +659,7 @@
             thinkEl.textContent = THINKING_LABELS[data.intent] || 'Thinking…';
           } else if (data.type === 'response') {
             thinkEl.remove();
-            appendAssistant(data.answer, data.sources, data.offer_save);
+            appendAssistant(data.answer, data.sources, data.offer_save, data.tool_calls);
           } else if (data.type === 'error') {
             thinkEl.remove();
             appendAssistant('Sorry, something went wrong: ' + data.detail, [], false);

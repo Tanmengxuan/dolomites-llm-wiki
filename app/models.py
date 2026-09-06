@@ -14,6 +14,7 @@ class ChatResponse(BaseModel):
     offer_save: bool
     session_id: str
     intent: Literal["wiki_qa", "web_search", "ingest", "planner"] = "wiki_qa"
+    tool_calls: list[dict] = []  # planner only: [{"tool": "wiki_search", "query": "..."}]
 
 
 class SaveRequest(BaseModel):

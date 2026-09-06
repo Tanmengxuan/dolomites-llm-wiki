@@ -87,6 +87,18 @@ async def chat(req: ChatRequest):
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
 
+@app.post("/debug/arm-web-error/{session_id}", include_in_schema=False)
+def debug_arm_web_error(session_id: str):
+    session_store.arm_web_error(session_id)
+    return {"armed": "web_search", "session_id": session_id}
+
+
+@app.post("/debug/arm-wiki-error/{session_id}", include_in_schema=False)
+def debug_arm_wiki_error(session_id: str):
+    session_store.arm_wiki_error(session_id)
+    return {"armed": "wiki_qa", "session_id": session_id}
+
+
 @app.get("/files")
 def list_files():
     result = {}

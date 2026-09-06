@@ -11,6 +11,10 @@ logger = logging.getLogger(__name__)
 async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
     logger.info("[wiki_qa_agent] Starting (session=%s)", session_id[:8])
 
+    if session_store.consume_wiki_error(session_id):
+        logger.info("[wiki_qa_agent] [TEST] Simulating error for session %s", session_id[:8])
+        raise RuntimeError("[TEST] Simulated wiki_qa error — type 'try again' to retry for real.")
+
     known_pages = set(wiki_utils.list_wiki_pages())
     logger.info("[wiki_qa_agent] %d pages available on disk", len(known_pages))
 
@@ -21,11 +25,8 @@ async def run(session_id: str, user_message: str, context: str = "") -> ChatResp
 
     if not valid_pages:
         logger.info("[wiki_qa_agent] No relevant pages found — returning default response")
-        session_store.append_user(session_id, user_message)
-        answer = "I couldn't find that in the wiki."
-        session_store.append_assistant(session_id, answer)
         return ChatResponse(
-            answer=answer,
+            answer="I couldn't find that in the wiki.",
             sources=[],
             offer_save=False,
             session_id=session_id,
@@ -37,9 +38,6 @@ async def run(session_id: str, user_message: str, context: str = "") -> ChatResp
     answer, offer_save = await asyncio.to_thread(
         synthesize.synthesize_answer, session_id, user_message, valid_pages, context
     )
-
-    session_store.append_user(session_id, user_message)
-    session_store.append_assistant(session_id, answer)
 
     logger.info("[wiki_qa_agent] Done — offer_save=%s", offer_save)
     return ChatResponse(

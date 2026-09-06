@@ -4,6 +4,7 @@ import re
 from urllib.parse import urlparse
 
 from app.anthropic_client import get_client, with_date
+from app import session_store
 from app.models import ChatResponse
 from app.skills.web_search.prompts import CITATION_SYSTEM, WEB_SEARCH_SYSTEM
 
@@ -110,6 +111,10 @@ def _run_search(prompt: str) -> str:
 async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
     logger.info("[web_search_agent] Starting (session=%s)", session_id[:8])
     logger.info("[web_search_agent] Query: %s", user_message)
+
+    if session_store.consume_web_error(session_id):
+        logger.info("[web_search_agent] [TEST] Simulating network error for session %s", session_id[:8])
+        raise RuntimeError("[TEST] Simulated network error — type 'try again' to retry for real.")
 
     prompt = (
         f"{context}\n\nCurrent request: {user_message}"

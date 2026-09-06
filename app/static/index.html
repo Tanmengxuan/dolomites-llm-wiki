@@ -277,6 +277,9 @@
   .badge:hover { background: #d4ebd4; }
   #files-btn { background: rgba(255,255,255,0.15); border: none; color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
   #files-btn:hover { background: rgba(255,255,255,0.25); }
+  #reflect-btn { background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 0.82rem; font-family: inherit; }
+  #reflect-btn:hover { background: rgba(255,255,255,0.25); }
+  #reflect-btn.off { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.15); color: rgba(255,255,255,0.55); }
 </style>
 </head>
 <body>
@@ -285,6 +288,7 @@
   <span>⛰️</span>
   <h1>Dolomites Trip Wiki</h1>
   <button id="files-btn" onclick="openFileBrowser()">📄 Files</button>
+  <button id="reflect-btn" title="Toggle planner reflection pass">🔍 Reflect: ON</button>
 </header>
 
 <div class="layout">
@@ -352,6 +356,14 @@
   const saveStatus = document.getElementById('save-status');
 
   let sessionId = sessionStorage.getItem('session_id');
+  let reflectEnabled = true;
+
+  const reflectBtn = document.getElementById('reflect-btn');
+  reflectBtn.addEventListener('click', () => {
+    reflectEnabled = !reflectEnabled;
+    reflectBtn.textContent = `🔍 Reflect: ${reflectEnabled ? 'ON' : 'OFF'}`;
+    reflectBtn.classList.toggle('off', !reflectEnabled);
+  });
 
   async function initSession() {
     if (!sessionId) {
@@ -495,7 +507,7 @@
     if (toolCalls && toolCalls.length) {
       const steps = document.createElement('div');
       steps.className = 'planner-steps';
-      const TOOL_ICON = { wiki_search: '📖', web_search: '🌐', ask_user: '❓' };
+      const TOOL_ICON = { wiki_search: '📖', web_search: '🌐', ask_user: '❓', reflect: '🔍' };
       toolCalls.forEach(tc => {
         const chip = document.createElement('div');
         chip.className = 'planner-step';
@@ -630,7 +642,7 @@
       const res = await fetch('/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId, message: text }),
+        body: JSON.stringify({ session_id: sessionId, message: text, reflect: reflectEnabled }),
       });
 
       if (!res.ok) {

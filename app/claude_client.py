@@ -12,6 +12,7 @@ async def run_chat_turn(
     user_message: str,
     intent: str | None = None,
     context: str | None = None,
+    reflect: bool = True,
 ) -> ChatResponse:
     logger.info("── New query (session=%s) ──────────────────", session_id[:8])
     logger.info("User: %s", user_message)
@@ -34,7 +35,7 @@ async def run_chat_turn(
             web_search_history = session_store.get_web_search_history(session_id)
             response = await ingest_agent.run(session_id, user_message, context, web_search_history)
         elif intent == "planner":
-            response = await planner_agent.run(session_id, user_message, context)
+            response = await planner_agent.run(session_id, user_message, context, reflect=reflect)
         else:
             response = await wiki_qa_agent.run(session_id, user_message, context)
     except Exception:

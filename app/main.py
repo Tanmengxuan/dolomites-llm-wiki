@@ -63,7 +63,7 @@ async def chat(req: ChatRequest):
         yield f"data: {json.dumps({'type': 'intent', 'intent': intent})}\n\n"
         try:
             task = asyncio.create_task(
-                claude_client.run_chat_turn(req.session_id, message, intent=intent, context=context)
+                claude_client.run_chat_turn(req.session_id, message, intent=intent, context=context, reflect=req.reflect)
             )
             # Send keepalive comments every 15 s so proxies don't drop the SSE connection
             # during long-running agents (web search can take 60-120 s).

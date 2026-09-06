@@ -32,8 +32,10 @@ Rules:
 - Use planner only when the question genuinely needs BOTH wiki context AND live web data,
   or when runtime reasoning is needed to decide what to look up. Do not use it for simple
   questions that clearly belong to wiki_qa or web_search alone.
-- Use context to resolve ambiguous references (e.g. "add that to the wiki" after a web
-  search = ingest; "where am I staying?" = wiki_qa).
+- Use conversation history to resolve ambiguous references. The history includes the intent
+  label of each prior turn (e.g. [web_search], [wiki_qa]) alongside the user and assistant
+  text. Examples: "add that to the wiki" after a [web_search] turn = ingest. "try again" or
+  "retry" after any turn = same intent as that prior turn, even if the prior turn failed.
 - Reply with exactly one word: wiki_qa, web_search, planner, or ingest."""
 
 Intent = Literal["wiki_qa", "web_search", "ingest", "planner"]

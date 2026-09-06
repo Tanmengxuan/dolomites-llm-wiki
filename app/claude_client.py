@@ -26,16 +26,21 @@ async def run_chat_turn(
         intent = orchestrator.classify_intent(user_message, context)
     logger.info("[claude_client] Routing to intent=%s", intent)
 
-    if intent == "web_search":
-        response = await web_search_agent.run(session_id, user_message, context)
-        session_store.append_web_search(session_id, user_message, response.answer)
-    elif intent == "ingest":
-        web_search_history = session_store.get_web_search_history(session_id)
-        response = await ingest_agent.run(session_id, user_message, context, web_search_history)
-    elif intent == "planner":
-        response = await planner_agent.run(session_id, user_message, context)
-    else:
-        response = await wiki_qa_agent.run(session_id, user_message, context)
+    try:
+        if intent == "web_search":
+            response = await web_search_agent.run(session_id, user_message, context)
+            session_store.append_web_search(session_id, user_message, response.answer)
+        elif intent == "ingest":
+            web_search_history = session_store.get_web_search_history(session_id)
+            response = await ingest_agent.run(session_id, user_message, context, web_search_history)
+        elif intent == "planner":
+            response = await planner_agent.run(session_id, user_message, context)
+        else:
+            response = await wiki_qa_agent.run(session_id, user_message, context)
+    except Exception:
+        # Store a failed exchange so the intent is preserved in context for retries.
+        session_store.append_exchange(session_id, intent, user_message, "[error — no response]")
+        raise
 
-    session_store.append_exchange(session_id, response.intent, user_message, response.answer)
+    session_store.append_exchange(session_id, intent, user_message, response.answer)
     return response

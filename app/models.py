@@ -6,7 +6,7 @@ from pydantic import BaseModel, field_validator
 class ChatRequest(BaseModel):
     session_id: str
     message: str
-    reflect: bool = True
+    reflect: bool = False
 
 
 class ChatResponse(BaseModel):

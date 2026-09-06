@@ -356,9 +356,11 @@
   const saveStatus = document.getElementById('save-status');
 
   let sessionId = sessionStorage.getItem('session_id');
-  let reflectEnabled = true;
+  let reflectEnabled = false;
 
   const reflectBtn = document.getElementById('reflect-btn');
+  reflectBtn.textContent = '🔍 Reflect: OFF';
+  reflectBtn.classList.add('off');
   reflectBtn.addEventListener('click', () => {
     reflectEnabled = !reflectEnabled;
     reflectBtn.textContent = `🔍 Reflect: ${reflectEnabled ? 'ON' : 'OFF'}`;

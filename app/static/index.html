@@ -509,7 +509,7 @@
     if (toolCalls && toolCalls.length) {
       const steps = document.createElement('div');
       steps.className = 'planner-steps';
-      const TOOL_ICON = { wiki_search: '📖', web_search: '🌐', ask_user: '❓', reflect: '🔍' };
+      const TOOL_ICON = { wiki_search: '📖', web_search: '🌐', ask_user: '❓', reflect: '🔍', fetch_url: '🔗' };
       toolCalls.forEach(tc => {
         const chip = document.createElement('div');
         chip.className = 'planner-step';

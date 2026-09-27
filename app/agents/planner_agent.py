@@ -1,5 +1,8 @@
 import asyncio
 import logging
+import re
+
+import httpx
 
 from app import session_store, wiki_utils
 from app.anthropic_client import get_client, with_date
@@ -9,6 +12,52 @@ from app.skills.wiki_qa import identify, synthesize
 from app.agents.web_search_agent import _run_search
 
 logger = logging.getLogger(__name__)
+
+_FETCH_TIMEOUT = 20
+_FETCH_MAX_CHARS = 12000
+_JINA_PREFIX = "https://r.jina.ai/"
+_BROWSER_UA = (
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+    "AppleWebKit/537.36 (KHTML, like Gecko) "
+    "Chrome/124.0.0.0 Safari/537.36"
+)
+
+
+def _strip_html(html: str) -> str:
+    html = re.sub(r'<(script|style)[^>]*>.*?</\1>', '', html, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<[^>]+>', ' ', html)
+    text = re.sub(r'[ \t]+', ' ', text)
+    text = re.sub(r'\n{3,}', '\n\n', text)
+    return text.strip()
+
+
+def _fetch_url(url: str) -> str:
+    headers = {"User-Agent": _BROWSER_UA}
+    # Direct fetch
+    try:
+        resp = httpx.get(url, headers=headers, follow_redirects=True, timeout=_FETCH_TIMEOUT)
+        text = _strip_html(resp.text)
+        if len(text) > 500:
+            logger.info("[planner/fetch_url] direct fetch OK — %d chars from %s", len(text), url)
+            return text[:_FETCH_MAX_CHARS]
+        logger.info("[planner/fetch_url] direct fetch too short (%d chars) — trying Jina", len(text))
+    except Exception as e:
+        logger.warning("[planner/fetch_url] direct fetch failed for %s: %s", url, e)
+    # Jina Reader fallback — handles JS-rendered pages
+    try:
+        resp = httpx.get(
+            _JINA_PREFIX + url,
+            headers={"Accept": "text/plain", "User-Agent": _BROWSER_UA},
+            follow_redirects=True,
+            timeout=_FETCH_TIMEOUT,
+        )
+        text = resp.text.strip()
+        logger.info("[planner/fetch_url] Jina fallback OK — %d chars from %s", len(text), url)
+        return text[:_FETCH_MAX_CHARS]
+    except Exception as e:
+        logger.warning("[planner/fetch_url] Jina fallback failed for %s: %s", url, e)
+    return f"Could not fetch content from {url}."
+
 
 _PLANNER_TOOLS = [
     {
@@ -33,6 +82,20 @@ _PLANNER_TOOLS = [
             "type": "object",
             "properties": {"query": {"type": "string", "description": "Search query."}},
             "required": ["query"],
+        },
+    },
+    {
+        "name": "fetch_url",
+        "description": (
+            "Fetch the live content of a specific URL. Use when you need real-time data "
+            "from a known page — e.g. a live flight tracker, current weather station, "
+            "live schedule, or booking page. "
+            "Prefer this over web_search when you already know the exact URL to check."
+        ),
+        "input_schema": {
+            "type": "object",
+            "properties": {"url": {"type": "string", "description": "The full URL to fetch."}},
+            "required": ["url"],
         },
     },
     {
@@ -216,6 +279,11 @@ def _run_planner(session_id: str, user_message: str, context: str, reflect_enabl
                 tool_call_log.append({"tool": "web_search", "query": query})
                 result = _run_search(query)
                 session_store.append_web_search(session_id, query, result)
+
+            elif block.name == "fetch_url":
+                url = block.input["url"]
+                tool_call_log.append({"tool": "fetch_url", "query": url})
+                result = _fetch_url(url)
 
             else:
                 result = f"Unknown tool: {block.name}"

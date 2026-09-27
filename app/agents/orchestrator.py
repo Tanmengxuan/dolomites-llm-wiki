@@ -10,32 +10,36 @@ _MODEL = "claude-haiku-4-5"
 _SYSTEM = """You are an intent classifier for a Dolomites trip planning chatbot (Sept 6–19, 2026).
 Classify the user's message into exactly one of four intents:
 
-- wiki_qa: a self-contained question answerable from the wiki alone — itinerary, accommodations,
-  hikes, restaurants, gear, budget, transport. The answer does not need live data.
-  Examples: "what hotel am I staying at on Sept 7?", "what hikes are planned?", "what's the budget?"
+- planner: DEFAULT for all trip-related questions. Use this whenever there is any doubt.
+  The planner has access to both the wiki and the live web and decides at runtime what to look up.
+  Use planner for: anything involving flight/transport details, boarding gates, live conditions,
+  weather for planned activities, restaurant or hike recommendations, day-specific questions,
+  or any question where the answer might require looking up wiki context before searching the web.
+  Examples: "what is the boarding gate of our connecting flight?", "how's the weather where I
+  am today?", "is the hike I planned for Sept 10 safe?", "what should I pack?",
+  "what hotel am I at on Sept 9?", "recommend a dinner spot for tonight"
 
-- web_search: a self-contained question that needs live or external data not in the wiki —
-  current weather, real-time prices, trail conditions, transport schedules, external URLs.
-  Examples: "what's the weather in Cortina this week?", "is the Seceda cable car running?"
+- wiki_qa: ONLY when the question is provably answerable from the wiki alone with no possible
+  need for live data or cross-referencing — and the answer does not depend on external context.
+  Examples: "what is the total trip budget?", "list all the wiki pages", "what is written about
+  gear in the wiki?" — pure retrieval with no reasoning chain needed.
 
-- planner: the question requires combining wiki knowledge with live web data, or involves
-  multi-step reasoning across both sources, or is ambiguous enough that the agent needs to
-  decide at runtime what sources to consult.
-  Examples: "how's the weather where I am today?", "is the hike I planned for Sept 10 safe given
-  current conditions?", "what should I pack given today's forecast for my location?"
+- web_search: ONLY when the question is provably answerable from a live web search alone,
+  with no possible need for any wiki context — typically when the user supplies all specifics
+  (explicit location, flight number, date) in their message itself.
+  Examples: "search for LH1850 gate status right now", "what is the weather in Munich today",
+  "current EUR to SGD exchange rate"
 
 - ingest: an explicit instruction to save content into the wiki — reading a source file,
   adding web search results, or updating wiki pages.
-  Examples: "ingest raw/...", "add that to the wiki", "save this information", "update the wiki with..."
+  Examples: "ingest raw/...", "add that to the wiki", "save this information", "update the wiki"
 
 Rules:
-- Use planner only when the question genuinely needs BOTH wiki context AND live web data,
-  or when runtime reasoning is needed to decide what to look up. Do not use it for simple
-  questions that clearly belong to wiki_qa or web_search alone.
+- When in doubt between planner and wiki_qa or web_search, always choose planner.
+  wiki_qa and web_search are speed optimisations for provably single-domain queries only.
 - Use conversation history to resolve ambiguous references. The history includes the intent
   label of each prior turn (e.g. [web_search], [wiki_qa]) alongside the user and assistant
-  text. Examples: "add that to the wiki" after a [web_search] turn = ingest. "try again" or
-  "retry" after any turn = same intent as that prior turn, even if the prior turn failed.
+  text. "try again" or "retry" after any turn = same intent as that prior turn.
 - Reply with exactly one word: wiki_qa, web_search, planner, or ingest."""
 
 Intent = Literal["wiki_qa", "web_search", "ingest", "planner"]
@@ -58,7 +62,7 @@ def classify_intent(user_message: str, context: str = "") -> Intent:
         if raw in ("wiki_qa", "web_search", "ingest", "planner"):
             logger.info("[orchestrator] classified intent=%s", raw)
             return raw  # type: ignore[return-value]
-        logger.warning("[orchestrator] unexpected intent %r — falling back to wiki_qa", raw)
+        logger.warning("[orchestrator] unexpected intent %r — falling back to planner", raw)
     except Exception:
-        logger.exception("[orchestrator] classification failed — falling back to wiki_qa")
-    return "wiki_qa"
+        logger.exception("[orchestrator] classification failed — falling back to planner")
+    return "planner"

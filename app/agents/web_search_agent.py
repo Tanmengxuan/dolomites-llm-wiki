@@ -6,7 +6,8 @@ from urllib.parse import urlparse
 from app.anthropic_client import get_client, with_date
 from app import session_store
 from app.models import ChatResponse
-from app.skills.web_search.prompts import CITATION_SYSTEM, WEB_SEARCH_SYSTEM
+from app.skills.web_search.prompts import WEB_SEARCH_SYSTEM
+from app.agents.url_fetch import fetch_url, FETCH_URL_TOOL
 
 logger = logging.getLogger(__name__)
 
@@ -46,8 +47,23 @@ def _process_citations(text: str) -> str:
     return text
 
 
+_PHASE2_SYSTEM = (
+    "You are a web research assistant finalising an answer.\n\n"
+    "You have a draft answer from a web search and the list of source URLs that were found. "
+    "Your job:\n"
+    "1. If any source URL would provide meaningfully better or more complete information "
+    "(especially for live data like flight status, or detailed content the snippet missed), "
+    "call fetch_url on it.\n"
+    "2. Write the complete final answer. After every sentence that states a fact, insert "
+    "<<URL>> immediately after it with the most appropriate source URL.\n"
+    "Example: 'The trail is 9 km long. <<https://alltrails.com/trail/example>>'\n"
+    "Use ONLY the <<URL>> tag format. No HTML, no markdown links. "
+    "Only cite URLs that appear in the source list or that you fetched."
+)
+
+
 def _run_search(prompt: str) -> str:
-    # Phase 1: web search — produce a draft and collect source URLs/titles
+    # Phase 1: web search — model searches and produces a draft
     response = get_client().messages.create(
         model="claude-sonnet-4-6",
         max_tokens=8192,
@@ -57,7 +73,7 @@ def _run_search(prompt: str) -> str:
     )
 
     text_parts: list[str] = []
-    sources: list[tuple[str, str]] = []  # (title, url)
+    sources: list[tuple[str, str]] = []
     seen: set[str] = set()
 
     for block in response.content:
@@ -74,38 +90,56 @@ def _run_search(prompt: str) -> str:
 
     draft = " ".join(text_parts).strip()
     logger.info("[web_search_agent] Phase 1 draft (first 300): %s", draft[:300].replace("\n", " "))
+    logger.info("[web_search_agent] Phase 1 done — %d source(s)", len(sources))
 
     if not draft:
         return draft
-
-    logger.info("[web_search_agent] Phase 1 done — %d source(s)", len(sources))
-
     if not sources:
         return _process_citations(draft)
 
-    # Phase 2: citation synthesis — model inserts <<URL>> tags, Python converts them
+    # Phase 2: agentic pass — model may call fetch_url for deeper content, then writes final cited answer
     url_list = "\n".join(f"- {title} → {url}" for title, url in sources)
-    synthesis_user = (
-        f"DRAFT ANSWER:\n{draft}\n\n"
-        f"AVAILABLE SOURCES:\n{url_list}\n\n"
-        f"Rewrite the draft. After every sentence that states a fact, insert a <<URL>> "
-        f"tag immediately after it with the most appropriate source URL from the list above.\n"
-        f"Example: 'The trail is 9 km long. <<https://alltrails.com/trail/example>>'\n"
-        f"Use ONLY the <<URL>> tag format. No HTML, no markdown links."
-    )
-    synthesis = get_client().messages.create(
-        model="claude-haiku-4-5",
-        max_tokens=8192,
-        system=CITATION_SYSTEM,
-        messages=[{"role": "user", "content": synthesis_user}],
-    )
-    cited_parts = [b.text for b in synthesis.content if b.type == "text"]
-    cited_raw = " ".join(cited_parts).strip()
-    logger.info("[web_search_agent] Phase 2 raw (first 300): %s", cited_raw[:300].replace("\n", " "))
+    messages = [{"role": "user", "content": (
+        f"Original query: {prompt}\n\n"
+        f"Draft answer:\n{draft}\n\n"
+        f"Available sources:\n{url_list}"
+    )}]
 
-    cited = _process_citations(cited_raw)
-    logger.info("[web_search_agent] Phase 2 done")
-    return cited or _process_citations(draft)
+    for turn in range(5):
+        response = get_client().messages.create(
+            model="claude-sonnet-4-6",
+            max_tokens=8192,
+            system=_PHASE2_SYSTEM,
+            tools=[FETCH_URL_TOOL],
+            messages=messages,
+        )
+
+        text_parts = [b.text for b in response.content if b.type == "text"]
+
+        if response.stop_reason == "end_turn":
+            final = " ".join(text_parts).strip()
+            logger.info("[web_search_agent] Phase 2 raw (first 300): %s", final[:300].replace("\n", " "))
+            logger.info("[web_search_agent] Phase 2 done")
+            return _process_citations(final or draft)
+
+        if response.stop_reason != "tool_use":
+            break
+
+        messages.append({"role": "assistant", "content": response.content})
+        tool_results = []
+        for block in response.content:
+            if block.type == "tool_use" and block.name == "fetch_url":
+                url = block.input["url"]
+                logger.info("[web_search_agent] fetch_url: %s", url)
+                tool_results.append({
+                    "type": "tool_result",
+                    "tool_use_id": block.id,
+                    "content": fetch_url(url),
+                })
+        if tool_results:
+            messages.append({"role": "user", "content": tool_results})
+
+    return _process_citations(draft)
 
 
 async def run(session_id: str, user_message: str, context: str = "") -> ChatResponse:
